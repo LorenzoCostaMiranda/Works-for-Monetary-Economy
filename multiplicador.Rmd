@@ -217,7 +217,7 @@ ggplot(data = SerieTemporal_d) +
 
 ```
 
-```{r echo=FALSE, fig.cap = "Plot da Série Temporal do Coeficiente \"e\" e \"d\""}
+```{r echo=FALSE, fig.cap = "Plot da Série Temporal dos Coeficientes \"e\" e \"d\""}
 
 ggplot(data = Coeficientes) +
   aes(x = data, y = Valor_de_e, color = "Valor_de_e") +
@@ -229,7 +229,7 @@ ggplot(data = Coeficientes) +
 
 ```
 
-```{r echo = FALSE, fig.cap = "Plot Série Temporal do Multiplicador Monetáio"}
+```{r echo = FALSE, fig.cap = "Plot Série Temporal do Multiplicador Monetário"}
 
 ggplot(data = SerieTemporal_alpha, aes( x = data, y = valor)) +
   geom_line(colour = "purple") +
