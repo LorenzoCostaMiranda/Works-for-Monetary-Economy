@@ -1,0 +1,1 @@
+detalhes = colocar divisão dos números grandes na tabela para as 3 primeiras colunas. (modificar pelos vetores que formam a tibble)
