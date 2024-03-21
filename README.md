@@ -19,7 +19,6 @@ O short-report à seguir é um trabalho promovido pela matéria de economia mone
 É necessário instalar (install.packages()) um conjunto de pacotes e puxar suas bibliotecas (library()) para realizar a compilação do PDF. Segue o nome deles:
 
 - GetBCBData
-- sidrar
 - dplyr
 - pandoc
 - ggplot2
@@ -32,4 +31,4 @@ Todo o script está presente no arquivo `multiplicador.rmd`, e o PDF já formado
 
 ### Observação:
 
-Lembrar de mudar os caminhos presentes no cabeçalho do arquivo `rmd` para o do seu diretório do template em `tex` presente na própria pasta `template`, do `crossref` existente na pasta `filter` e do `header.tex` na pasta `header`.
+Em desejo de alteração do projeto, lembrar de mudar os caminhos presentes no cabeçalho do arquivo `rmd` para o do seu diretório do template em `tex` presente na própria pasta `template`, do `crossref` existente na pasta `filter` e do `header.tex` na pasta `header`.
