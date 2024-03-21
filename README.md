@@ -31,4 +31,4 @@ Todo o script está presente no arquivo `multiplicador.rmd`, e o PDF já formado
 
 ### Observação:
 
-Em desejo de alteração do projeto, lembrar de mudar os caminhos presentes no cabeçalho do arquivo `rmd` para o do seu diretório do template em `tex` presente na própria pasta `template`, do `crossref` existente na pasta `filter` e do `header.tex` na pasta `header`.
+Em desejo de observação ou alteração do projeto, lembrar de mudar os caminhos presentes no cabeçalho do arquivo `rmd` para o do seu diretório do template em `tex` presente na própria pasta `template`, do `crossref` existente na pasta `filter` e do `header.tex` na pasta `header`.
