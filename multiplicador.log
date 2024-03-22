@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.26 (MiKTeX 24.3) (preloaded format=pdflatex 2024.3.17)  22 MAR 2024 17:15
+This is pdfTeX, Version 3.141592653-2.6-1.40.26 (MiKTeX 24.3) (preloaded format=pdflatex 2024.3.17)  22 MAR 2024 17:41
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -391,8 +391,8 @@ Package: titlesec 2023/10/27 v2.16 Sectioning titles
 \titlewidthfirst=\dimen181
 )
 Package translations Info: No language package found. I am going to use `englis
-h' as default language. on input line 47.
-LaTeX Font Info:    Trying to load font information for T1+ptm on input line 47
+h' as default language. on input line 42.
+LaTeX Font Info:    Trying to load font information for T1+ptm on input line 42
 .
 (C:\Program Files\MiKTeX\tex/latex/psnfss\t1ptm.fd
 File: t1ptm.fd 2001/06/04 font definitions for T1/ptm.
@@ -405,24 +405,24 @@ File: l3backend-pdftex.def 2023-04-19 L3 backend support: PDF output (pdfTeX)
 ) (multiplicador.aux)
 \openout1 = `multiplicador.aux'.
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 47.
-LaTeX Font Info:    ... okay on input line 47.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 47.
-LaTeX Font Info:    ... okay on input line 47.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 47.
-LaTeX Font Info:    ... okay on input line 47.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 47.
-LaTeX Font Info:    ... okay on input line 47.
-LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 47.
-LaTeX Font Info:    ... okay on input line 47.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 47.
-LaTeX Font Info:    ... okay on input line 47.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 47.
-LaTeX Font Info:    ... okay on input line 47.
-LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 47.
-LaTeX Font Info:    ... okay on input line 47.
-LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 47.
-LaTeX Font Info:    ... okay on input line 47.
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 42.
+LaTeX Font Info:    ... okay on input line 42.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 42.
+LaTeX Font Info:    ... okay on input line 42.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 42.
+LaTeX Font Info:    ... okay on input line 42.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 42.
+LaTeX Font Info:    ... okay on input line 42.
+LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 42.
+LaTeX Font Info:    ... okay on input line 42.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 42.
+LaTeX Font Info:    ... okay on input line 42.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 42.
+LaTeX Font Info:    ... okay on input line 42.
+LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 42.
+LaTeX Font Info:    ... okay on input line 42.
+LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 42.
+LaTeX Font Info:    ... okay on input line 42.
 
 (C:\Users\Lorenzo Costa\AppData\Local\Programs\MiKTeX\tex/context/base/mkii\sup
 p-pdf.mkii
@@ -455,8 +455,8 @@ File: translations-basic-dictionary-english.trsl (english translation file `tra
 nslations-basic-dictionary')
 )
 Package translations Info: loading dictionary `translations-basic-dictionary' f
-or `english'. on input line 47.
-Package hyperref Info: Link coloring OFF on input line 47.
+or `english'. on input line 42.
+Package hyperref Info: Link coloring OFF on input line 42.
 (multiplicador.out) (multiplicador.out)
 \@outlinefile=\write3
 \openout3 = `multiplicador.out'.
@@ -496,11 +496,11 @@ Package hyperref Info: Link coloring OFF on input line 47.
 * (1in=72.27pt=25.4mm, 1cm=28.453pt)
 
 LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <12> on input line 59.
+(Font)              <12> on input line 54.
 LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <8> on input line 59.
+(Font)              <8> on input line 54.
 LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <6> on input line 59.
+(Font)              <6> on input line 54.
 [1
 
 {C:/Users/Lorenzo Costa/AppData/Local/MiKTeX/fonts/map/pdftex/pdftex.map}{C:/Us
@@ -512,7 +512,7 @@ File: multiplicador_files/figure-latex/unnamed-chunk-6-1.pdf Graphic file (type
  pdf)
 <use multiplicador_files/figure-latex/unnamed-chunk-6-1.pdf>
 Package pdftex.def Info: multiplicador_files/figure-latex/unnamed-chunk-6-1.pdf
-  used on input line 443.
+  used on input line 438.
 (pdftex.def)             Requested size: 469.75386pt x 325.2142pt.
 <multiplicador_files/figure-latex/unnamed-chunk-7-1.pdf, id=51, 469.755pt x 325
 .215pt>
@@ -520,7 +520,7 @@ File: multiplicador_files/figure-latex/unnamed-chunk-7-1.pdf Graphic file (type
  pdf)
 <use multiplicador_files/figure-latex/unnamed-chunk-7-1.pdf>
 Package pdftex.def Info: multiplicador_files/figure-latex/unnamed-chunk-7-1.pdf
-  used on input line 449.
+  used on input line 444.
 (pdftex.def)             Requested size: 469.75386pt x 325.2142pt.
 <multiplicador_files/figure-latex/unnamed-chunk-8-1.pdf, id=52, 469.755pt x 325
 .215pt>
@@ -528,7 +528,7 @@ File: multiplicador_files/figure-latex/unnamed-chunk-8-1.pdf Graphic file (type
  pdf)
 <use multiplicador_files/figure-latex/unnamed-chunk-8-1.pdf>
 Package pdftex.def Info: multiplicador_files/figure-latex/unnamed-chunk-8-1.pdf
-  used on input line 455.
+  used on input line 450.
 (pdftex.def)             Requested size: 469.75386pt x 325.2142pt.
 <multiplicador_files/figure-latex/unnamed-chunk-9-1.pdf, id=53, 469.755pt x 325
 .215pt>
@@ -536,7 +536,7 @@ File: multiplicador_files/figure-latex/unnamed-chunk-9-1.pdf Graphic file (type
  pdf)
 <use multiplicador_files/figure-latex/unnamed-chunk-9-1.pdf>
 Package pdftex.def Info: multiplicador_files/figure-latex/unnamed-chunk-9-1.pdf
-  used on input line 461.
+  used on input line 456.
 (pdftex.def)             Requested size: 469.75386pt x 325.2142pt.
 <multiplicador_files/figure-latex/unnamed-chunk-10-1.pdf, id=54, 469.755pt x 32
 5.215pt>
@@ -544,7 +544,7 @@ File: multiplicador_files/figure-latex/unnamed-chunk-10-1.pdf Graphic file (typ
 e pdf)
 <use multiplicador_files/figure-latex/unnamed-chunk-10-1.pdf>
 Package pdftex.def Info: multiplicador_files/figure-latex/unnamed-chunk-10-1.pd
-f  used on input line 467.
+f  used on input line 462.
 (pdftex.def)             Requested size: 469.75386pt x 325.2142pt.
 <multiplicador_files/figure-latex/unnamed-chunk-11-1.pdf, id=55, 469.755pt x 32
 5.215pt>
@@ -552,7 +552,7 @@ File: multiplicador_files/figure-latex/unnamed-chunk-11-1.pdf Graphic file (typ
 e pdf)
 <use multiplicador_files/figure-latex/unnamed-chunk-11-1.pdf>
 Package pdftex.def Info: multiplicador_files/figure-latex/unnamed-chunk-11-1.pd
-f  used on input line 474.
+f  used on input line 469.
 (pdftex.def)             Requested size: 469.75386pt x 325.2142pt.
 [10 <./multiplicador_files/figure-latex/unnamed-chunk-6-1.pdf>] [11 <./multipli
 cador_files/figure-latex/unnamed-chunk-7-1.pdf>] [12 <./multiplicador_files/fig
@@ -585,9 +585,9 @@ fb><C:/Users/Lorenzo Costa/AppData/Local/Programs/MiKTeX/fonts/type1/urw/times/
 utmb8a.pfb><C:/Users/Lorenzo Costa/AppData/Local/Programs/MiKTeX/fonts/type1/ur
 w/times/utmr8a.pfb><C:/Users/Lorenzo Costa/AppData/Local/Programs/MiKTeX/fonts/
 type1/urw/times/utmri8a.pfb>
-Output written on multiplicador.pdf (15 pages, 203453 bytes).
+Output written on multiplicador.pdf (15 pages, 202529 bytes).
 PDF statistics:
- 159 PDF objects out of 1000 (max. 8388607)
+ 158 PDF objects out of 1000 (max. 8388607)
  23 named destinations out of 1000 (max. 500000)
  31 words of extra memory for PDF output out of 10000 (max. 10000000)
 
