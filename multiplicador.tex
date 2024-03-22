@@ -10,15 +10,19 @@
 \usepackage{siunitx}
 \usepackage{graphicx}
 \usepackage{float}
+\usepackage{sectsty}
+\usepackage{hyperref}
 
 
-
+\author{Lorenzo Costa Miranda}
 
 \date{} %remove date
 
-
-\title{Multiplicador monetário e seus coeficientes entre 2003 à 2023}
-
+\AtEndDocument{
+	\vfill
+	\centering
+	\textbf{\href{https://github.com/LorenzoCostaMiranda/Short-report-monetary-economy.git}{My Github}}
+}
 
 \usepackage{geometry}
 \usepackage{setspace}
@@ -43,26 +47,31 @@
 \begin{document}
 
 \section*{Multiplicador monetário e seus coeficientes entre 2003 à 2023}
+\hspace{4.5cm} LORENZO COSTA MIRANDA
+\vspace*{5pt}
+
+
 
 O multiplicador monetário é um valor, normalmente entre 1 e 2, no qual
-espera-se que a base monetária da economia multiple e varie. Essa essa
-variável monetária é função de outras duas, o coeficiente ``e'' e o
-coeficiente ``d'', e, por isso, condiz com essa fórmula:
-\(\alpha = \frac{1}{1-d(1-e)}\) . O ``e'' é uma razão entre os encaixes
-totais e os depósitos à vista dos bancos comerciais. O fato de haver os
-encaixes totais na fração torna o Banco Central (BACEN) influenciador
-direto desse coeficiente, visto que o valor de encaixes compulsórios
-está intrínseco aos encaixes totais. Portanto, o BACEN tem o poder de
-decidir o quanto vai ser passado da reserva dos bancos comerciais para o
-mesmo, o que significa que o ``e'' tem caráter negativo no
-multiplicador, pois sabe-se que ao aumentar esse encaixe, os bancos
-comerciais tenderão a oferecer menos empréstimos. Já o coeficiente ``d''
-é a razão entre os depósitos à vista dos bancos comerciais e os meios de
-pagamento. Essa fração nada mais indica o quão ativos estão os bancos
-comerciais e em que proporção oferecem empréstimos e crétidos em relação
-aos meios de pagamentos totais da economia (PPMP +
-DV\textsubscript{bc}). Dessa forma, o ``d'' é um indicador da atuação
-dos bancos comerciais, e tem relação direta com o multiplicador.
+espera-se que os meios de pagamento da economia multiple e varie em
+relação à base monetária. Essa essa variável monetária é função de
+outras duas, o coeficiente ``e'' e o coeficiente ``d'', e, por isso,
+condiz com essa fórmula: \(\alpha = \frac{1}{1-d(1-e)}\) . O ``e'' é uma
+razão entre os encaixes totais e os depósitos à vista dos bancos
+comerciais. O fato de haver os encaixes totais na fração torna o Banco
+Central (BACEN) influenciador direto desse coeficiente, visto que o
+valor de encaixes compulsórios está intrínseco aos encaixes totais.
+Portanto, o BACEN tem o poder de decidir o quanto vai ser passado da
+reserva dos bancos comerciais para o mesmo, o que significa que o ``e''
+tem caráter negativo no multiplicador, pois sabe-se que ao aumentar esse
+encaixe, os bancos comerciais tenderão a oferecer menos empréstimos. Já
+o coeficiente ``d'' é a razão entre os depósitos à vista dos bancos
+comerciais e os meios de pagamento. Essa fração nada mais indica o quão
+ativos estão os bancos comerciais e em que proporção oferecem
+empréstimos e crétidos em relação aos meios de pagamentos totais da
+economia (PPMP + DV\textsubscript{bc}). Dessa forma, o ``d'' é um
+indicador da atuação dos bancos comerciais, e tem relação direta com o
+multiplicador.
 
 Para a realização desse \textit{short report}, consideramos encaixes
 totais a subtração da base monetária (B) pelo papel moeda no poder do
@@ -85,7 +94,7 @@ mais agressivas do vintênio no meses de 2017, apontando valores de
 estava em níveis relativamente elevados, corroborando para o declínio do
 multiplicador.
 
-\subsection*{Segunda Análise - Os Efeitos da Copa do Mundo}
+\subsubsection*{Segunda Análise - Os Efeitos da Copa do Mundo}
 
 Para que a copa do mundo, sediada no Brasil em 2014, ocorresse com
 êxito, o governo procurou despender boa quantia de dinheiro para
@@ -457,14 +466,15 @@ Data & Meios de Pagamentos & Depositos a vista & Encaixes Totais & e & d & alpha
 \centering
 \includegraphics{multiplicador_files/figure-latex/unnamed-chunk-10-1.pdf}
 \caption{Plot Série Temporal do Multiplicador Monetário do Período da
-Lauda}
+Copa}
 \end{figure}
 
 \begin{figure}
 \centering
 \includegraphics{multiplicador_files/figure-latex/unnamed-chunk-11-1.pdf}
-\caption{Plot Série Temporal do coeficiente ``e'' do Período da Lauda}
+\caption{Plot Série Temporal do coeficiente ``e'' do Período da Copa}
 \end{figure}	
 
-	
+\newpage
+
 \end{document}

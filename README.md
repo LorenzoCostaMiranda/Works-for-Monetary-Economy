@@ -26,6 +26,7 @@ O short-report à seguir é um trabalho promovido pela matéria de economia mone
 - tidyr
 - kableExtra
 - flextable
+- openxlsx
 
 Todo o script está presente no arquivo `multiplicador.rmd`, e o PDF já formado está em `multiplicador.pdf`.
 
