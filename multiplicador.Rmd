@@ -13,27 +13,21 @@ classoption: secnumdepth=-1
 
 ```{r include=FALSE, message=FALSE, warning=FALSE}
 library(GetBCBData)
-library(sidrar)
 library(dplyr)
 library(pandoc)
 library(ggplot2)
-library(readxl)
-library(xlsx)
-library(openxlsx)
 library(tibble)
 library(tidyr)
 library(kableExtra)
 library(flextable)
-library(extrafont)
-
 ```
 
 
-O multiplicador monetário é um valor, normalmente entre 1 e 2, no qual espera-se que a base monetária da economia multiple e varie. Essa essa variável monetária é função de mais outras duas, o coeficiente "e" e o coeficiente "d", e, por isso, condiz com essa fórmula: $\alpha = \frac{1}{1-d(1-e)}$ . O "e" é uma razão entre os encaixes totais e os depósitos à vista dos bancos comerciais. O fato de haver os encaixes totais na fração torna o Banco Central (BACEN) influenciador direto desse coeficiente, visto que o valor de encaixes compulsórios está intrínseco aos encaixes totais. Portanto, o BACEN tem o poder de decidir o quanto vai ser passado da reserva dos bancos comerciais para o mesmo, o que significa que o "e" tem caráter negativo no multiplicador, pois sabe-se ao aumentar esse encaixe, os bancos comerciais tenderão a oferecer menos empréstimos. Já o coeficiente "d" é a razão entre os depósitos à vista dos bancos comerciais e os meios de pagamento. Essa fração nada mais diz que os bancos comerciais estão mais ativos, e oferecem empréstimos em maior quantidade ao público de acordo com a demanda. Dessa forma, o "d" é um indicador da atuação dos bancos comerciais, e tem relação direta com o multiplicador.
+O multiplicador monetário é um valor, normalmente entre 1 e 2, no qual espera-se que a base monetária da economia multiple e varie. Essa essa variável monetária é função de outras duas, o coeficiente "e" e o coeficiente "d", e, por isso, condiz com essa fórmula: $\alpha = \frac{1}{1-d(1-e)}$ . O "e" é uma razão entre os encaixes totais e os depósitos à vista dos bancos comerciais. O fato de haver os encaixes totais na fração torna o Banco Central (BACEN) influenciador direto desse coeficiente, visto que o valor de encaixes compulsórios está intrínseco aos encaixes totais. Portanto, o BACEN tem o poder de decidir o quanto vai ser passado da reserva dos bancos comerciais para o mesmo, o que significa que o "e" tem caráter negativo no multiplicador, pois sabe-se que ao aumentar esse encaixe, os bancos comerciais tenderão a oferecer menos empréstimos. Já o coeficiente "d" é a razão entre os depósitos à vista dos bancos comerciais e os meios de pagamento. Essa fração nada mais indica o quão ativos estão os bancos comerciais e em que proporção oferecem empréstimos e crétidos em relação aos meios de pagamentos totais da economia (PPMP + DV\textsubscript{bc}). Dessa forma, o "d" é um indicador da atuação dos bancos comerciais, e tem relação direta com o multiplicador.
 
 Para a realização desse \textit{short report}, consideramos encaixes totais a subtração da base monetária (B) pelo papel moeda no poder do público (PMPP).
 
-Nos anos de 2003 à 2023, o multiplicador do banco central obteve uma média geral de 1,4262, o coeficiente "e" apresentou 0,4658 e o coeficiente "d", por sua vez, mostrou 0,5555 de média geral. Apartir da tabela e dos gráficos é possível observar que os picos do coeficiente "e" estão em 2003, nos meses de abril e julho, onde constaram respectivamente 0,650 e 0,648. É possível associar essa extremidade com as baixas expressivas do multiplicador monetário também em abril de 2003, com um valor de 1,281 e em julho com 1,283. No outro lado da moeda, houve uma grande queda no valor de "d" nos períodos de dezembro de 2015 e janeiro de 2016, 2017, 2018 e 2019 em que o coeficiente chegou a expressar os números de 0,466; 0,468; 0,465; 0,464 e 0,463 respectivamente, e como reflexo, o multiplicador teve uma de suas quedas mais agressivas do vintênio no meses de 2017 apontando valores de 1,242; 1.244; 1.253 etc, enquanto nesse momento, o coeficiente de "e" estava em níveis relativamente elevados, corroborando para o declínio do multiplicador. 
+Nos anos de 2003 à 2023, o multiplicador do banco central obteve uma média geral de 1,4262, o coeficiente "e" apresentou 0,4658 e o coeficiente "d", por sua vez, mostrou 0,5555 de média geral. Apartir da tabela e dos gráficos é possível observar que os picos do coeficiente "e" estão em 2003, nos meses de abril e julho, onde constaram respectivamente 0,650 e 0,648. É possível associar essa extremidade com as baixas expressivas do multiplicador monetário também em abril de 2003, com um valor de 1,281 e em julho com 1,283. No outro lado da moeda, houve uma grande queda no valor de "d" nos períodos de dezembro de 2015 e janeiro de 2016, 2017, 2018 e 2019 em que o coeficiente chegou a expressar os números de 0,466; 0,468; 0,465; 0,464 e 0,463 respectivamente, e como reflexo, o multiplicador teve uma de suas quedas mais agressivas do vintênio no meses de 2017, apontando valores de 1,242; 1.244; 1.253 etc, enquanto nesse momento, o coeficiente de "e" estava em níveis relativamente elevados, corroborando para o declínio do multiplicador. 
 
 \subsection*{Segunda Análise - Os Efeitos da Copa do Mundo}
 
@@ -240,7 +234,29 @@ ggplot(data = SerieTemporal_alpha, aes( x = data, y = valor)) +
 ```
 
 
-```{r echo=FALSE, message=FALSE, warning=FALSE}
+```{r echo = FALSE, message=FALSE, warning=FALSE, fig.cap = "Plot Série Temporal do Multiplicador Monetário do Período da Lauda"}
+
+ggplot(data = SerieTemporal_alpha[85:139, ],aes( x = data, y = valor)) +
+  geom_line(colour = "purple") +
+  labs(x = "Data", y = "alpha") +
+  geom_point(colour = "black") +
+  theme_minimal() 
+
+```
+
+```{r echo = FALSE, message=FALSE, warning=FALSE, fig.cap = "Plot Série Temporal do coeficiente \"e\" do Período da Lauda"}
+
+ggplot(data = SerieTemporal_e[85:139, ]) +
+    aes(x = data, y = valor) +
+       geom_line(colour = "red") +
+       labs(x = "Data", y = "Coeficiente 'e'") +
+       geom_point(colour = "black") +
+    theme_minimal()
+
+```
+
+
+```{r echo=FALSE, message=FALSE, warning=FALSE, results = 'hide'}
 
 media_multi <- mean(Multiplicador_mon)
 mean(SerieTemporal_alpha$valor[85:139], na.rm = TRUE)
@@ -249,4 +265,7 @@ media_e <- mean(Coeficiente_e)
 media_d <- mean(Coeficiente_d)
 
 ```
+
+
+
 
