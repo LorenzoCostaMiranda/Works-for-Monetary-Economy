@@ -2,11 +2,11 @@
 documentclass: report
 output: 
   pdf_document:
-    template: "C:/Users/Lorenzo Costa/Desktop/multiplicador/template/multiplicador.tex"
+    template: "C:/Users/Lorenzo Costa/Desktop/Trabalhos/Economia Monetária/multiplicadorpt2/template/multiplicador.tex"
     keep_tex: TRUE
-    pandoc_args: ["C:/Users/Lorenzo Costa/Desktop/multiplicador/filter/crossref.lua"]
+    pandoc_args: ["C:/Users/Lorenzo Costa/Desktop/Trabalhos/Economia Monetária/multiplicadorpt2/filter/crossref.lua"]
     includes:
-      in_header: "C:/Users/Lorenzo Costa/Desktop/multiplicador/header/header.tex"
+      in_header: "C:/Users/Lorenzo Costa/Desktop/Trabalhos/Economia Monetária/multiplicadorpt2/header/header.tex"
 classoption: secnumdepth=-1
 ---
 
@@ -25,8 +25,6 @@ library(openxlsx)
 
 
 O multiplicador monetário é um valor, normalmente entre 1 e 2, no qual espera-se que os meios de pagamento da economia multiple e varie em relação à base monetária. Essa essa variável monetária é função de outras duas, o coeficiente "e" e o coeficiente "d", e, por isso, condiz com essa fórmula: $\alpha = \frac{1}{1-d(1-e)}$ . O "e" é uma razão entre os encaixes totais e os depósitos à vista dos bancos comerciais. O fato de haver os encaixes totais na fração torna o Banco Central (BACEN) influenciador direto desse coeficiente, visto que o valor de encaixes compulsórios está intrínseco aos encaixes totais. Portanto, o BACEN tem o poder de decidir o quanto vai ser passado da reserva dos bancos comerciais para o mesmo, o que significa que o "e" tem caráter negativo no multiplicador, pois sabe-se que ao aumentar esse encaixe, os bancos comerciais tenderão a oferecer menos empréstimos. Já o coeficiente "d" é a razão entre os depósitos à vista dos bancos comerciais e os meios de pagamento. Essa fração nada mais indica o quão ativos estão os bancos comerciais e em que proporção oferecem empréstimos e crétidos em relação aos meios de pagamentos totais da economia (PPMP + DV\textsubscript{bc}). Dessa forma, o "d" é um indicador da atuação dos bancos comerciais, e tem relação direta com o multiplicador.
-
-Para a realização desse \textit{short report}, consideramos encaixes totais a subtração da base monetária (B) pelo papel moeda no poder do público (PMPP).
 
 Nos anos de 2003 à 2023, o multiplicador do banco central obteve uma média geral de 1,4262, o coeficiente "e" apresentou 0,4658 e o coeficiente "d", por sua vez, mostrou 0,5555 de média geral. Apartir da tabela e dos gráficos é possível observar que os picos do coeficiente "e" estão em 2003, nos meses de abril e julho, onde constaram respectivamente 0,650 e 0,648. É possível associar essa extremidade com as baixas expressivas do multiplicador monetário também em abril de 2003, com um valor de 1,281 e em julho com 1,283. No outro lado da moeda, houve uma grande queda no valor de "d" nos períodos de dezembro de 2015 e janeiro de 2016, 2017, 2018 e 2019 em que o coeficiente chegou a expressar os números de 0,466; 0,468; 0,465; 0,464 e 0,463 respectivamente, e como reflexo, o multiplicador teve uma de suas quedas mais agressivas do vintênio no meses de 2017, apontando valores de 1,242; 1.244; 1.253 etc, enquanto nesse momento, o coeficiente de "e" estava em níveis relativamente elevados, corroborando para o declínio do multiplicador. 
 
