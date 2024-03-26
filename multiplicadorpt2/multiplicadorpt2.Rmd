@@ -12,6 +12,7 @@ output:
 
 
 ```{r include=FALSE, message=FALSE, warning=FALSE}
+library(htmltools)
 library(GetBCBData)
 library(dplyr)
 library(pandoc)
@@ -24,6 +25,7 @@ library(openxlsx)
 library(scales)
 library(reshape2)
 library(patchwork)
+library(sidrar)
 ```
 
 ### Tabela Dos Coeficientes
@@ -114,13 +116,20 @@ TabelaSELIC <- GetBCBData::gbcbd_get_series(
   last.date = "2023-12-01"
 )
 
-#PIB mensal a preços correntes 
-TabelaPIB <- GetBCBData::gbcbd_get_series(
-  id = 4380,
-  first.date = "2003-01-01",
-  last.date = "2023-12-01"
-)
+#Puxando a Tabela de PIB e tratando-a
 
+dados_pib <- read.xlsx("C:/Users/Lorenzo Costa/Desktop/Trabalhos/Economia Monetária/multiplicadorpt2/tabelaPIB.xlsx", sheet = "Tabela")
+
+anos <- seq(2003,2021, by = 1)
+print(anos, max.print = Inf)
+
+vetorPIB <- as.numeric(dados_pib[4, -1])
+print(vetorPIB, max.print = Inf)
+
+vetor_PIB <-format(vetorPIB, big.mark = ".", decimal.mark = ",", scientific = FALSE)
+
+
+TabelaPIB <- tibble(Data = anos, "PIB valores correntes(milhões)" = vetor_PIB)
 
 ```
 
@@ -130,7 +139,7 @@ TabelaPIB <- GetBCBData::gbcbd_get_series(
 dates <- seq.Date(from = as.Date("2003-01-01"), to = as.Date("2023-12-01"), by = "month")
 
 
-#criando vetores das tabelas
+#criando vetores das tabelas (não terá o vetor PIB - ja foi criado anteriormente)
 vetormp <- TabelaMP[[2]]
 vetordepavi <- TabelaDepAvi[[2]]
 vetorresban <- TabelaResBan[[2]]
@@ -141,7 +150,7 @@ vetorM2 <- TabelaM2[[2]]
 vetorM3 <- TabelaM3[[2]]
 vetorM4 <- TabelaM4[[2]]
 vetorIPCA <- TabelaIPCA[[2]]
-vetorPIB <- TabelaPIB[[2]]
+
 vetorSELIC <- TabelaSELIC[[2]]
 
 #formatando os vetores
@@ -155,8 +164,6 @@ vetor_M1 <- format(vetorM1, big.mark = ".", decimal.mark = ",", scientific = FAL
 vetor_M2 <- format(vetorM2, big.mark = ".", decimal.mark = ",", scientific = FALSE)
 vetor_M3 <- format(vetorM3, big.mark = ".", decimal.mark = ",", scientific = FALSE)
 vetor_M4 <- format(vetorM4, big.mark = ".", decimal.mark = ",", scientific = FALSE)
-vetor_PIB <-format(vetorPIB, big.mark = ".", decimal.mark = ",", scientific = FALSE)
-
 
 
 ```
@@ -251,10 +258,11 @@ kable(TabelaCoeficientes, format = "html", longtable = TRUE, booktabs = TRUE, ca
 #Criando a tibble dos Agregados Monetários, IPCA e PIB, mas só futuramente será exibida no arquivo html
 
 TabelaAgregados <- tibble( Data = dates, "M1" = vetor_M1, "M2" = vetor_M2, "M3" = vetor_M3,
-                           "M4" = vetor_M4,"IPCA" = vetorIPCA, "SELIC" = vetorSELIC, "PIB R$ (milhões)" = vetor_PIB)
+                           "M4" = vetor_M4,"IPCA" = vetorIPCA, "SELIC" = vetorSELIC)
 
 
-#Transformando os restantes das colunas em variáveis numéricas (fazer isso após a exibição da tabela em html)
+#Transformando (retomando) os restantes das colunas em variáveis numéricas (fazer isso após a exibição da tabela em html)
+#Só é possível utilizar o summary e o sapply em variáveis numéricas.
 
 TabelaCoeficientes$`Meios de Pagamentos` <- as.numeric(gsub("\\.", "", TabelaCoeficientes$`Meios de Pagamentos`))
 TabelaCoeficientes$`Depositos a vista` <- as.numeric(gsub("\\.", "", TabelaCoeficientes$`Depositos a vista`))
@@ -344,10 +352,14 @@ ggplot(data = TabelaCoeficientes) +
 ```
 ### Tabela dos Agregados Monetários, Taxa Selic e PIB
 
-```{r echo = FALSE, message = FALSE, warning = FALSE}
-
-kable(TabelaAgregados, format = "html", longtable = TRUE, booktabs = TRUE, caption = "Valores dos Agregados, Selic e do PIB") %>%
+```{r echo = FALSE, message = FALSE, warning = FALSE, results = 'asis'}
+kable(TabelaAgregados, format = "html", longtable = TRUE, booktabs = TRUE, caption = "Valores dos Agregados e Selic") %>%
   kable_styling(bootstrap_options = c("striped", "hover", "condensed"))
+
+
+kable(TabelaPIB, format = "html", longtable = TRUE, booktabs = TRUE, caption = "Valores do PIB") %>%
+  kable_styling(bootstrap_options = c("striped", "hover", "condensed"))
+
 
 ```
 ### Gráficos dos Agregados Monetários, Taxa Selic e PIB
