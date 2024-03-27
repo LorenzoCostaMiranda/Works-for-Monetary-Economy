@@ -1,0 +1,292 @@
+---
+documentclass: report
+output: 
+  pdf_document:
+    template: "C:/Users/Lorenzo Costa/Desktop/Trabalhos/Economia Monetária/multiplicadorpt2/template/multiplicador.tex"
+    keep_tex: TRUE
+    pandoc_args: ["C:/Users/Lorenzo Costa/Desktop/Trabalhos/Economia Monetária/multiplicadorpt2/filter/crossref.lua"]
+    includes:
+      in_header: "C:/Users/Lorenzo Costa/Desktop/Trabalhos/Economia Monetária/multiplicadorpt2/header/header.tex"
+classoption: secnumdepth=-1
+---
+
+<!--chapter:end:Index.Rmd-->
+
+---
+documentclass: report
+output: 
+  pdf_document:
+    template: "C:/Users/Lorenzo Costa/Desktop/Trabalhos/Economia Monetária/multiplicadorpt1/template/multiplicador.tex"
+    keep_tex: TRUE
+    pandoc_args: ["C:/Users/Lorenzo Costa/Desktop/Trabalhos/Economia Monetária/multiplicadorpt1/filter/crossref.lua"]
+    includes:
+      in_header: "C:/Users/Lorenzo Costa/Desktop/Trabalhos/Economia Monetária/multiplicadorpt1/header/header.tex"
+classoption: secnumdepth=-1
+---
+
+
+```{r include=FALSE, message=FALSE, warning=FALSE}
+library(GetBCBData)
+library(dplyr)
+library(pandoc)
+library(ggplot2)
+library(tibble)
+library(tidyr)
+library(kableExtra)
+library(flextable)
+library(openxlsx)
+```
+
+
+O multiplicador monetário é um valor, normalmente entre 1 e 2, no qual espera-se que os meios de pagamento da economia multiple e varie em relação à base monetária. Essa essa variável monetária é função de outras duas, o coeficiente "e" e o coeficiente "d", e, por isso, condiz com essa fórmula: $\alpha = \frac{1}{1-d(1-e)}$ . O "e" é uma razão entre os encaixes totais e os depósitos à vista dos bancos comerciais. O fato de haver os encaixes totais na fração torna o Banco Central (BACEN) influenciador direto desse coeficiente, visto que o valor de encaixes compulsórios está intrínseco aos encaixes totais. Portanto, o BACEN tem o poder de decidir o quanto vai ser passado da reserva dos bancos comerciais para o mesmo, o que significa que o "e" tem caráter negativo no multiplicador, pois sabe-se que ao aumentar esse encaixe, os bancos comerciais tenderão a oferecer menos empréstimos. Já o coeficiente "d" é a razão entre os depósitos à vista dos bancos comerciais e os meios de pagamento. Essa fração nada mais indica o quão ativos estão os bancos comerciais e em que proporção oferecem empréstimos e crétidos em relação aos meios de pagamentos totais da economia (PPMP + DV\textsubscript{bc}). Dessa forma, o "d" é um indicador da atuação dos bancos comerciais, e tem relação direta com o multiplicador.
+
+Nos anos de 2003 à 2023, o multiplicador do banco central obteve uma média geral de 1,4262, o coeficiente "e" apresentou 0,4658 e o coeficiente "d", por sua vez, mostrou 0,5555 de média geral. Apartir da tabela e dos gráficos é possível observar que os picos do coeficiente "e" estão em 2003, nos meses de abril e julho, onde constaram respectivamente 0,650 e 0,648. É possível associar essa extremidade com as baixas expressivas do multiplicador monetário também em abril de 2003, com um valor de 1,281 e em julho com 1,283. No outro lado da moeda, houve uma grande queda no valor de "d" nos períodos de dezembro de 2015 e janeiro de 2016, 2017, 2018 e 2019 em que o coeficiente chegou a expressar os números de 0,466; 0,468; 0,465; 0,464 e 0,463 respectivamente, e como reflexo, o multiplicador teve uma de suas quedas mais agressivas do vintênio no meses de 2017, apontando valores de 1,242; 1.244; 1.253 etc, enquanto nesse momento, o coeficiente de "e" estava em níveis relativamente elevados, corroborando para o declínio do multiplicador. 
+
+\subsubsection*{Segunda Análise - Os Efeitos da Copa do Mundo}
+
+Para que a copa do mundo, sediada no Brasil em 2014, ocorresse com êxito, o governo procurou despender boa quantia de dinheiro para infraestrutura e urbanização. Um exemplo claro foi em 2010, momento em que foi anunciada o local da próxima copa, quando o BNDS (Banco Nacional de Desenvolvimento) criou o projeto "ProCopa" em que deferiu empréstimos e investimentos para a construção de novos estádios, reformas de arenas e urbanização em seu entorno. Nesse momento, do início em 2010 até julho 2014, onde a copa é encerrada, o multiplicador monetário encontrou uma média de 1,42, bem similar à média geral. É possível perceber também que houve uma queda brusca no meio do período de análise, porém logo se recupera com pequenos picos e consagra a média. Ao analisar a tragetória do coeficiente "d", é visível que vem em queda desde 2010 e que continua na decrescente até depois de 2015, enquanto o coeficiente "e" tem bastante crescentes no período de análise. Uma hipótese para o caso é de que, com os gastos governamentais em excesso, e bastante criação de demanda agregada, o BACEN, monopolizador da política monetária, preveu um possível aumento da inflação com essa distribuição de renda e com a renda vinda de fora por parte dos imigrantes no momento de copa do mundo, e por isso, os valores de "e" apresentam aumentos antes do ano da copa. Como os encaixes compulsórios estão se elevando, os bancos comerciais pretendem aplicar políticas contracionistas de empréstimos ou ao menos estagnar a concessão de crédito, e consequentemente o multiplicador apresenta algumas quedas antes de 2014, assim como procura manter um nível comum, mas cede em certos momentos já no ano da copa do mundo e das eleições presidenciais. 
+
+
+```{r include=FALSE, message=FALSE, warning=FALSE}
+##Pegando os dados necessários pelo ID 
+
+
+#reservas bancárias =/ Encaixes Totais
+TabelaResBan <- GetBCBData::gbcbd_get_series(
+  id =  1787,
+  first.date = "2003-01-01",
+  last.date = "2023-12-01"
+)
+
+#Papel Moeda no Poder Público
+
+TabelaPMPP <- GetBCBData::gbcbd_get_series(
+  id = 27789 ,
+  first.date = "2003-01-01",
+  last.date = "2023-12-01"
+)
+
+
+#Base monetária
+
+TabelaBASE <- GetBCBData::gbcbd_get_series(
+  id =  1788,
+  first.date = "2003-01-01",
+  last.date = "2023-12-01"
+)
+
+
+#Depósitos à vista
+TabelaDepAvi <- GetBCBData::gbcbd_get_series(
+ id =  27790,
+ first.date = "2003-01-01",
+ last.date = "2023-12-01"
+)
+
+#Meios de pagamento = PMPP + DV (TOTAL DE M1)
+TabelaMP <- GetBCBData::gbcbd_get_series(
+  id = 27791,
+  first.date = "2003-01-01",
+  last.date = "2023-12-01"
+)
+
+###Identificando a classe das variáveis de interesse
+
+class(TabelaResBan$value)
+class(TabelaDepAvi$value)
+class(TabelaMP$value)
+class(TabelaBASE$value)
+class(TabelaPMPP$value)
+
+```
+
+```{r echo = FALSE, message=FALSE, warning=FALSE}
+
+### Criando um vetor para ser a coluna de tempo
+dates <- seq.Date(from = as.Date("2003-01-01"), to = as.Date("2023-12-01"), by = "month")
+
+
+#criando vetores para cada valor do MP, DV, ResBan, PPMP e BASE MONETARIA
+vetormp <- TabelaMP[[2]]
+vetordepavi <- TabelaDepAvi[[2]]
+vetorresban <- TabelaResBan[[2]]
+vetorPPMP <- TabelaPMPP[[2]]
+vetorBASE <- TabelaBASE[[2]]
+
+
+#formatando os vetores
+
+vetor_mp <- format(vetormp, big.mark = ".", decimal.mark = ",", scientific = FALSE)
+vetor_depavi <- format(vetordepavi, big.mark = ".", decimal.mark = ",", scientific = FALSE)
+vetor_resban <- format(vetorresban, big.mark = ".", decimal.mark = ",", scientific = FALSE)
+vetor_PPMP <- format(vetorPPMP, big.mark = ".", decimal.mark = ",", scientific = FALSE)
+vetor_BASE <- format(vetorBASE, big.mark = ".", decimal.mark = ",", scientific = FALSE)
+
+```
+
+```{r echo=FALSE, message=FALSE, warning=FALSE}
+#criação das séries temporais
+
+###SABEMOS QUE B = PMPP + ENCAIXES TOTAIS / LOGO ENCAIXES TOTAIS = B - PMPP
+
+#Função de subtração
+
+Z <- function(s, t){
+      Resultado = s - t
+      return(Resultado)
+}
+
+
+#criando um vetor com os encaixes técnicos
+
+VetorEncaixe <- mapply(Z, TabelaBASE[[2]], TabelaPMPP[[2]])
+
+#Tabela do vetor de encaxe
+
+TabelaEncaixe <- tibble(Data = dates, Valor = VetorEncaixe)
+
+#Formatando o vetor_encaixe
+
+Vetor_Encaixe <- format(VetorEncaixe, big.mark = ".", decimal.mark = ",", scientific = FALSE)
+
+
+### juntando todas as variáveis em uma tabela só
+
+TabelaBacen <- tibble(Data = dates, "Meios de Pagamentos" = vetor_mp, 
+            "Depositos a vista" = vetor_depavi, "Encaixes Totais" = Vetor_Encaixe)
+
+
+
+
+# Criando função para realizar o cálculo do coeficiente
+X <- function(x,y){
+  Resultado = x/y
+  return(Resultado)
+}
+
+
+
+Coeficiente_e <- mapply(X, TabelaEncaixe[[2]], TabelaDepAvi[[2]])
+
+Coeficiente_d <- mapply(X, TabelaDepAvi[,2], TabelaMP[,2])
+
+
+SerieTemporal_e <- tibble(data = dates, valor = Coeficiente_e)
+SerieTemporal_d <- tibble(data = dates, valor = Coeficiente_d)
+
+y <- function(d,e){
+  Resultado = 1/(1-d * (1-e))
+  return(Resultado)
+}
+
+Coeficientes <- tibble(data = dates, Valor_de_e = Coeficiente_e, Valor_de_d = Coeficiente_d)
+
+
+Multiplicador_mon <- mapply(y, Coeficientes[,3], Coeficientes[,2])
+SerieTemporal_alpha <- tibble(data = dates, valor = Multiplicador_mon)
+
+
+```
+
+
+```{r echo=FALSE, message=FALSE, warning=FALSE}
+
+TabelaBacen <- TabelaBacen %>%
+  add_column(e = Coeficiente_e, d = Coeficiente_d, alpha = Multiplicador_mon, .after = "Encaixes Totais", .name_repair = "unique")
+
+kable(TabelaBacen, format = "latex", longtable = TRUE, booktabs = TRUE, caption = "Valores das Variáveis no Tempo") %>%
+  kable_styling(latex_options = c("striped", "scale_down"), full_width = FALSE, font_size = 10)
+
+
+```
+
+\newpage
+
+```{r echo=FALSE, fig.cap = "Plot da Série Temporal do Coeficiente \"e\"", fig.pos = 'H'}
+
+ggplot(data = SerieTemporal_e) +
+       aes(x = data, y = valor) +
+       geom_line(colour = "red") +
+       labs(x = "Data", y = "Coeficiente 'e'") +
+       geom_point(colour = "black") +
+  theme_minimal()
+
+```
+
+```{r echo=FALSE, fig.cap = "Plot da Série Temporal do Coeficiente \"d\""}
+
+ggplot(data = SerieTemporal_d) +
+  aes(x = data, y = valor) +
+  geom_line(colour = "blue") +
+  labs(x = "Data", y = "Coeficiente 'd'") +
+  geom_point(colour = "black") +
+  theme_minimal()
+
+```
+
+```{r echo=FALSE, fig.cap = "Plot da Série Temporal dos Coeficientes \"e\" e \"d\""}
+
+ggplot(data = Coeficientes) +
+  aes(x = data, y = Valor_de_e, color = "Valor_de_e") +
+  geom_line() +
+  geom_line(aes(y = Valor_de_d, color = "Valor_de_d")) +
+  labs(x = "Data", y = "Valores dos coeficientes") +
+  scale_color_manual(values = c("Valor_de_e" = "red", "Valor_de_d" = "blue")) +
+  theme_minimal()
+
+```
+
+```{r echo = FALSE, fig.cap = "Plot Série Temporal do Multiplicador Monetário"}
+
+ggplot(data = SerieTemporal_alpha, aes( x = data, y = valor)) +
+  geom_line(colour = "purple") +
+  labs(x = "Data", y = "alpha") +
+  geom_point(colour = "black") +
+  theme_minimal() 
+
+```
+
+
+```{r echo = FALSE, message=FALSE, warning=FALSE, fig.cap = "Plot Série Temporal do Multiplicador Monetário do Período da Copa"}
+
+ggplot(data = SerieTemporal_alpha[85:139, ],aes( x = data, y = valor)) +
+  geom_line(colour = "purple") +
+  labs(x = "Data", y = "alpha") +
+  geom_point(colour = "black") +
+  theme_minimal() 
+
+```
+
+```{r echo = FALSE, message=FALSE, warning=FALSE, fig.cap = "Plot Série Temporal do coeficiente \"e\" do Período da Copa"}
+
+ggplot(data = SerieTemporal_e[85:139, ]) +
+    aes(x = data, y = valor) +
+       geom_line(colour = "red") +
+       labs(x = "Data", y = "Coeficiente 'e'") +
+       geom_point(colour = "black") +
+    theme_minimal()
+
+```
+
+
+```{r echo=FALSE, message=FALSE, warning=FALSE, results = 'hide'}
+
+media_multi <- mean(Multiplicador_mon)
+mean(SerieTemporal_alpha$valor[85:139], na.rm = TRUE)
+
+media_e <- mean(Coeficiente_e) 
+media_d <- mean(Coeficiente_d)
+
+
+write.xlsx(TabelaBacen, "C:/Users/Lorenzo Costa/Desktop/multiplicador/TabelaBacen em xslx/TabelaBacen.xlsx")
+  
+  
+```
+
+
+
+
+
+
+<!--chapter:end:multiplicador.Rmd-->
+

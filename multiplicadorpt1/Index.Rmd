@@ -1,0 +1,11 @@
+---
+documentclass: report
+output: 
+  pdf_document:
+    template: "C:/Users/Lorenzo Costa/Desktop/Trabalhos/Economia Monetária/multiplicadorpt2/template/multiplicador.tex"
+    keep_tex: TRUE
+    pandoc_args: ["C:/Users/Lorenzo Costa/Desktop/Trabalhos/Economia Monetária/multiplicadorpt2/filter/crossref.lua"]
+    includes:
+      in_header: "C:/Users/Lorenzo Costa/Desktop/Trabalhos/Economia Monetária/multiplicadorpt2/header/header.tex"
+classoption: secnumdepth=-1
+---
