@@ -13,6 +13,7 @@ output:
 
 
 ```{r include=FALSE, message=FALSE, warning=FALSE}
+library(plotly)
 library(htmltools)
 library(GetBCBData)
 library(dplyr)
@@ -141,7 +142,7 @@ porcentoPIB <- (diffPIB / head(TabelaPIB$`PIB valores correntes(milhões)`, -1))
 PIBvari <- c(NA, porcentoPIB)
 
 TabelaPIB <- TabelaPIB %>%
-  add_column("Variação Percentual" = PIBvari, .after = "PIB valores correntes(milhões)")
+  add_column("Variação Percentual (%)" = PIBvari, .after = "PIB valores correntes(milhões)")
 
 #Repetir para que o PIB volte a ser numérico novamente
 
@@ -585,87 +586,152 @@ par(mfrow = c(1,1))
 mtext("Comparação Entre os Agregados e a Selic", outer = TRUE, cex = 1.5, line = 2)
 
 ```
+<br><br>
 
 
-```{r echo = FALSE, message=FALSE, warning=FALSE, fig.width=14, fig.height=12, out.width='100%'}
+```{r echo = FALSE, message=FALSE, warning=FALSE, fig.width=4, fig.height=4, out.width='100%'}
 #Criando Tabela de Correlação entre os Agregados monetários e a Taxa Selic
 
-par(mfrow = c(2, 2), oma = c(0, 0, 6, 0))
+#sapply(TabelaPIB, class)
+
+#Criando uma gráfico plotly com M1 e IPCA
+
+p1 <- plot_ly() %>%
+  add_lines(data = TabelaAgregados, x = ~Data, y = ~M1, name = "M1", color = I("green")) %>%
+  add_lines(data = TabelaAgregados, x = ~Data, y = ~IPCA, name = "IPCA", color = I("pink"),
+            yaxis = "y2")
+
+p1 <- p1 %>%
+  layout(
+    title = "M1 em relação ao IPCA",
+    yaxis = list(title = "M1"),
+    yaxis2 = list(
+      title = "IPCA",
+      overlaying = "y",
+      side = "right"
+    )
+  )
+
+p1
+
+# Fazendo o mesmo para M2 e IPCA
+
+p2 <- plot_ly() %>%
+  add_lines(data = TabelaAgregados, x = ~Data, y = ~M2, name = "M2", color = I("lawngreen")) %>%
+  add_lines(data = TabelaAgregados, x = ~Data, y = ~IPCA, name = "IPCA", color = I("pink"),
+            yaxis = "y2")
+
+p2 <- p2 %>%
+  layout(
+    title = "M2 em relação ao IPCA",
+    yaxis = list(title = "M2"),
+    yaxis2 = list(
+      title = "IPCA",
+      overlaying = "y",
+      side = "right"
+    )
+  )
+
+p2
+
+# Fazendo o mesmo para M3 e IPCA
 
 
-#Criando uma gráfico plot com M1 e SELIC
+p3 <- plot_ly() %>%
+  add_lines(data = TabelaAgregados, x = ~Data, y = ~M3, name = "M3", color = I("yellow")) %>%
+  add_lines(data = TabelaAgregados, x = ~Data, y = ~IPCA, name = "IPCA", color = I("pink"),
+            yaxis = "y2")
 
-plot(TabelaAgregados$Data, TabelaAgregados$M1, type = "l",
-     col = "green", ylim = c(min(TabelaAgregados$M1),
-                             max(TabelaAgregados$M1)),
-     ylab = "M1", xlab = "Data", cex.lab = 2.0, cex.axis = 1.5)
+p3 <- p3 %>%
+  layout(
+    title = "M3 em relação ao IPCA",
+    yaxis = list(title = "M3"),
+    yaxis2 = list(
+      title = "IPCA",
+      overlaying = "y",
+      side = "right"
+    )
+  )
 
+p3
 
-par(new = TRUE)
-plot(TabelaAgregados$Data, TabelaAgregados$IPCA, type = "l",
-     col = "pink", axes = FALSE, xlab = "", ylab = "",
-     ylim = c(min(TabelaAgregados$IPCA),
-              max(TabelaAgregados$IPCA)))
-
-axis(side = 4, at = pretty(range(TabelaAgregados$IPCA)))
-mtext("Taxa Selic (%)", side = 4, line = 3)
-
-
-
-### Fazendo o mesmo para M2 e SELIC
-
-plot(TabelaAgregados$Data, TabelaAgregados$M2, type = "l",
-    col = "lawngreen", ylim = c(min(TabelaAgregados$M2),
-                                max(TabelaAgregados$M2)),
-    ylab = "M2", xlab = "Data", cex.lab = 2.0, cex.axis = 1.5)
-par(new = TRUE)
-plot(TabelaAgregados$Data, TabelaAgregados$IPCA, type = "l",
-     col = "pink", axes = FALSE, xlab = "", ylab = "",
-     ylim = c(min(TabelaAgregados$IPCA),
-              max(TabelaAgregados$IPCA)))
-axis(side =  4, at = pretty(range(TabelaAgregados$IPCA)))
-mtext("Taxa Selic (%)", side = 4, line = 3)
-
-# Fazendo o mesmo para M3 e SELIC
-
-plot(TabelaAgregados$Data, TabelaAgregados$M3, type = "l",
-     col = "yellow", ylim = c(min(TabelaAgregados$M3),
-                              max(TabelaAgregados$M3)),
-     ylab = "M3", xlab = "Data", cex.lab = 2.0, cex.axis = 1.5)
-par(new = TRUE)
-plot(TabelaAgregados$Data, TabelaAgregados$IPCA, type = "l",
-     col = "pink", axes = FALSE, xlab = "", ylab = "",
-     ylim = c(min(TabelaAgregados$IPCA),
-              max(TabelaAgregados$IPCA)))
-axis(side =  4, at = pretty(range(TabelaAgregados$IPCA)))
-mtext("Taxa Selic (%)", side = 4, line = 3)
-
-# Fazendo o mesmo para M4 e SELIC
-
-plot(TabelaAgregados$Data, TabelaAgregados$M4, type = "l",
-     col = "orange", ylim = c(min(TabelaAgregados$M4),
-                              max(TabelaAgregados$M4)),
-     ylab = "M4", xlab = "Data", cex.lab = 2.0, cex.axis = 1.5)
-par(new = TRUE)
-plot(TabelaAgregados$Data, TabelaAgregados$IPCA, type = "l",
-     col = "pink", axes = FALSE, xlab = "", ylab = "",
-     ylim = c(min(TabelaAgregados$IPCA),
-              max(TabelaAgregados$IPCA)))
-axis(side =  4, at = pretty(range(TabelaAgregados$IPCA)))
-mtext("Taxa Selic (%)", side = 4, line = 3)
-
-par(mfrow = c(1,1))
-
-mtext("Comparação Entre os Agregados e o IPCA", outer = TRUE, cex = 1.5, line = 2)
+# Fazendo o mesmo para M4 e IPCA
 
 
+p4 <- plot_ly() %>%
+  add_lines(data = TabelaAgregados, x = ~Data, y = ~M4, name = "M4", color = I("orange")) %>%
+  add_lines(data = TabelaAgregados, x = ~Data, y = ~IPCA, name = "IPCA", color = I("pink"),
+            yaxis = "y2")
+
+p4 <- p4 %>%
+  layout(
+    title = "M4 em relação ao IPCA",
+    yaxis = list(title = "M4"),
+    yaxis2 = list(
+      title = "IPCA",
+      overlaying = "y",
+      side = "right"
+    )
+  )
+
+p4
 
 ```
+<br><br>
+
+```{r, echo=FALSE, message=FALSE, warning=FALSE}
+
+colnames(TabelaPIB)[colnames(TabelaPIB) == "PIB valores correntes(milhões)"] <- "PIB_Valores_Correntes_milhoes"
+
+
+Plotpib <- plot_ly() %>%
+    add_lines(data = TabelaAgregados, x = ~Data, y = ~M1, name = "M1", color = I("green")) %>%
+  add_lines(data = TabelaAgregados, x = ~Data, y = ~M2, name = "M2", color = I("lawngreen")) %>%
+  add_lines(data = TabelaAgregados, x = ~Data, y = ~M3, name = "M3", color = I("yellow")) %>%
+  add_lines(data = TabelaAgregados, x = ~Data, y = ~M4, name = "M4", color = I("orange")) %>%
+  add_lines(data = TabelaPIB, x = ~Data, y = ~PIB_Valores_Correntes_milhoes, name = "PIB valores correntes(milhões)", yaxis = "y2", color = I("darkblue"))
+
+# Configuração do layout com múltiplos eixos Y
+Plotpib <- Plotpib %>%
+  layout(
+    autosize = F, # Desativa o dimensionamento automático
+    width = 800,  # Largura do gráfico em pixels
+    height = 600, # Altura do gráfico em pixels
+    margin = list(l = 50, r = 50, b = 100, t = 100, pad = 4),
+    title = "PIB e os Agregados Monetários",
+    yaxis = list(title = "Agregados Monetários (M1, M2, M3, M4)"),
+    yaxis2 = list(
+      title = "PIB",
+      overlaying = "y",
+      side = "right",
+      anchor = "free",
+      position = 1.00
+    )
+  )
+
+# Renderização do gráfico
+Plotpib
+```
+
 ```{r echo=FALSE, message=FALSE, warning=FALSE}
 
+p <- plot_ly() %>%
+  add_lines(data = TabelaAgregados, x = ~Data, y = ~SELIC, name = "SELIC", color = I("cyan")) %>%
+  add_lines(data = TabelaPIB, x = ~Data, y = ~PIB_Valores_Correntes_milhoes, name = "PIB",
+            yaxis = 'y2', color = I("darkblue"))
 
+p <- p %>%
+  layout(
+    title = "Gráfico do PIB em relação à SELIC",
+    yaxis = list(title = "SELIC"),
+    yaxis2 = list(
+      title = "PIB Valores Correntes (milhões)",
+      overlaying = "y",
+      side = "right"
+    )
+  )
 
-
+p
 
 
 ```
@@ -675,6 +741,7 @@ write.xlsx(TabelaCoeficientes, "C:/Users/Lorenzo Costa/Desktop/Trabalhos/Economi
   
 ```
 
+### Análise Específica
 
 
 
