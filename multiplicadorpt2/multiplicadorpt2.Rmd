@@ -13,6 +13,7 @@ output:
 
 
 ```{r include=FALSE, message=FALSE, warning=FALSE}
+library(zoo)
 library(plotly)
 library(htmltools)
 library(GetBCBData)
@@ -120,7 +121,7 @@ TabelaSELIC <- GetBCBData::gbcbd_get_series(
 
 #Puxando a Tabela de PIB e tratando-a
 
-dados_pib <- read.xlsx("C:/Users/Lorenzo Costa/Desktop/Trabalhos/Economia Monetária/multiplicadorpt2/tabelaPIB.xlsx", sheet = "Tabela")
+dados_pib <- read.xlsx("C:/Users/Lorenzo Costa/Desktop/Trabalhos/Economia Monetaria/multiplicadorpt2/tabelaPIB.xlsx", sheet = "Tabela")
 
 anos <- seq(2003,2021, by = 1)
 print(anos, max.print = Inf)
@@ -293,7 +294,7 @@ TabelaCoeficientes$`Encaixes Totais` <- as.numeric(gsub("\\.", "", TabelaCoefici
 
 vetorestat <- c("Max", "Min", "Mean", "sd")
 
-vetorestatVARI <- c("Max", "Min", "Mean", "sd", "Highest Variance (%)", "Lowest Variance (%)")
+vetorestatVARI <- c("Max", "Min", "Mean", "sd", "HighestVariance(%)", "LowestVariance(%)")
 
 estatMP <- c("653.420.212", "86.231.763", "311.848.406", "160.128.500")
 estatDP <- c("367.475.256", "53.712.908", "167.699.479", "81.515.370")
@@ -313,7 +314,7 @@ kable(TabelaEstatCoe, format = "html", booktabs = TRUE) %>%
 
 
 
-#### Gráficos Dos Coeficientes
+#### Gráficos dos Coeficientes
 
 ```{r echo=FALSE, fig.cap = "Plot da Série Temporal do Coeficiente \"e\"", fig.pos = 'H'}
 
@@ -450,6 +451,8 @@ kable(VariacoesPercentuais, format = "html", booktabs = TRUE) %>%
 #
 #Criando a Tabela de estatística para A TabelaAgregados, que já são numéricos. (só é possível tirar essa estatística de valores numéricos)
 
+#sapply(TabelaAgregados, class)
+
 #summary(TabelaAgregados)
 #sapply(TabelaAgregados, sd)
 #summary(TabelaPIB)
@@ -460,31 +463,70 @@ kable(VariacoesPercentuais, format = "html", booktabs = TRUE) %>%
 #max(VariacoesPercentuais$M3, na.rm = TRUE)
 #max(VariacoesPercentuais$M4, na.rm = TRUE)
 #max(TabelaPIB$`Variação Percentual`, na.rm = TRUE)
+#max(TabelaAgregados$IPCA)
 #min(VariacoesPercentuais$M1, na.rm = TRUE)
 #min(VariacoesPercentuais$M2, na.rm = TRUE)
 #min(VariacoesPercentuais$M3, na.rm = TRUE)
 #min(VariacoesPercentuais$M4, na.rm = TRUE)
 #min(TabelaPIB$`Variação Percentual`, na.rm = TRUE)
+#min(TabelaAgregados$IPCA)
 
+#min(VariacoesPercentuais$`IPCA (%)`[is.finite(VariacoesPercentuais$`IPCA (%)`)], na.rm = TRUE)
 
-
-estatM1 <- c("653.420.212", "86.231.763", "311.848.406", "160.128.500", "22.87 (2007-12-01)", "-17.58 (2008-01-01)")
-estatM2 <- c("5.913.000.000", "385.500.000", "2.066.000.000", "1.407.171.000", "6.36 (2007-12-01)", "-3.12 (2008-01-01)")
-estatM3 <- c("10.860.000.000", "696.100.000", "4.239.000.000", "2.822.259.000", "5.73 (2010-01-01)", "-1.26 (2019-01-01)")
-estatM4 <- c("11.950.000.000", "810.300.000", "4.616.000.000", "3.046.371.000", " 4.49 (2007-09-01)", "-0.87 (2019-01-01)")
+estatM1 <- c("653.420.212", "86.231.763", "311.848.406", "160.128.500", "22.87 (2007-12)", "-17.58 (2008-01)")
+estatM2 <- c("5.913.000.000", "385.500.000", "2.066.000.000", "1.407.171.000", "6.36 (2007-12)", "-3.12 (2008-01)")
+estatM3 <- c("10.860.000.000", "696.100.000", "4.239.000.000", "2.822.259.000", "5.73 (2010-01)", "-1.26 (2019-01)")
+estatM4 <- c("11.950.000.000", "810.300.000", "4.616.000.000", "3.046.371.000", " 4.49 (2007-09)", "-0.87 (2019-01)")
 estatPIB <- c("9.012.142", "1.717.950", "4.814.316", "2.182.850", "18.43 (2021)", "2.98 (2020)")
+estatIPCA <- c("2.250 (2003-01)" , "-0.680 (2022-07)", "0.450", "0,3563829", "2400 (2014-08)" ,"-1350 (2005-07)")
+estatSELIC <- c("26.32 (2003-03)", "1.90 (2020-12)", "11.44", "4.863212", "-17.53 (2020-05)", "24.15 (2021-05)")
 
 TabelaEstatAg <- tibble(Estatística = vetorestatVARI, M1 = estatM1, M2 = estatM2, M3 = estatM3, M4 = estatM4,
-                        PIB = estatPIB)
+                        PIB = estatPIB, IPCA = estatIPCA, SELIC = estatSELIC)
 kable(TabelaEstatAg, format = "html", longtable = TRUE, booktabs = TRUE) %>%
-  kable_styling(bootstrap_options = c( "stripped", "hover", "condensed"))
+  kable_styling(bootstrap_options = c( "stripped", "hover", "condensed"), font_size = 12)
 
 ```
 
+```{r, echo = FALSE, message = FALSE, warning = FALSE, results='hide'}
+
+#Colocando os valores em decimais para fazer o cálculo da média móvel
+
+#sapply(TabelaAgregados, class)
+TabelaAgregados <- as.data.frame(TabelaAgregados)
+
+  
+
+#Fazendo a média móvel (12meses)
+TabelaAgregados$rollmeanIPCA <- rollmean(TabelaAgregados$IPCA, 12, fill = NA, align = 'right')
+TabelaAgregados$rollmeanSELIC <- rollmean(TabelaAgregados$SELIC, 12, fill = NA, align = 'right')
+
+TabelaAgregados$rollmeanIPCA3 <- rollmean(TabelaAgregados$IPCA, 3, fill = NA, align = 'right')
+TabelaAgregados$rollmeanSELIC3 <- rollmean(TabelaAgregados$SELIC, 3, fill = NA, align = 'right')
+
+
+
+```  
+  
 <br><br>
 
 
 #### Gráficos dos Agregados Monetários, Taxa Selic e PIB
+
+
+```{r echo = FALSE, message = FALSE, warning=FALSE}
+
+ggplot(data = TabelaAgregados) +
+  geom_line(aes( x = Data, y = rollmeanIPCA, color = "rollmeanIPCA")) +
+  geom_line(aes( x = Data, y = IPCA, color = "IPCA")) +
+  labs(x = "Data", y = "Valores", title = "Média Móvel de 12 meses do IPCA") +
+  scale_color_manual(values = c("rollmeanIPCA" = "purple2", "IPCA" = "pink")) +
+  theme_minimal()
+
+
+#colors()
+```
+<br><br>
 
 
 
@@ -497,7 +539,7 @@ ggplot(data = TabelaAgregados, aes(x = Data, y = M1, color = "M1")) +
   geom_line(aes(y = M2, color = "M2")) +
   geom_line(aes(y = M3, color = "M3")) +
   geom_line(aes(y = M4, color = "M4")) +
-  labs(x = "Data", y = "Valores") +
+  labs(x = "Data", y = "Valores", title = "Série Temporal dos Agregados Monetários") +
   scale_color_manual(values = c("M1" = "green", "M2" = "lawngreen", "M3" = "yellow", "M4" = "orange")) +
   scale_y_continuous(labels = label_number(big.mark = ".", decimal.mark = ",")) +
   theme_minimal()
@@ -505,7 +547,7 @@ ggplot(data = TabelaAgregados, aes(x = Data, y = M1, color = "M1")) +
 
 ```
 
-
+<br><br>
 
 
 ```{r echo = FALSE, message = FALSE, warning = FALSE, fig.width=14, fig.height=12, out.width='100%'}
@@ -594,11 +636,15 @@ mtext("Comparação Entre os Agregados e a Selic", outer = TRUE, cex = 1.5, line
 
 #sapply(TabelaPIB, class)
 
+#  add_lines(data = TabelaAgregados, x = ~Data, y = ~IPCA, name = "IPCA", color = I("pink"),
+            #yaxis = "y2")
+
+
 #Criando uma gráfico plotly com M1 e IPCA
 
 p1 <- plot_ly() %>%
   add_lines(data = TabelaAgregados, x = ~Data, y = ~M1, name = "M1", color = I("green")) %>%
-  add_lines(data = TabelaAgregados, x = ~Data, y = ~IPCA, name = "IPCA", color = I("pink"),
+  add_lines(data = TabelaAgregados, x = ~Data, y = ~rollmeanIPCA, name = "Média Móvel de 12 meses", color = I('purple2'),
             yaxis = "y2")
 
 p1 <- p1 %>%
@@ -618,7 +664,7 @@ p1
 
 p2 <- plot_ly() %>%
   add_lines(data = TabelaAgregados, x = ~Data, y = ~M2, name = "M2", color = I("lawngreen")) %>%
-  add_lines(data = TabelaAgregados, x = ~Data, y = ~IPCA, name = "IPCA", color = I("pink"),
+  add_lines(data = TabelaAgregados, x = ~Data, y = ~rollmeanIPCA, name = "Média Móvel de 12 meses", color = I('purple2'),
             yaxis = "y2")
 
 p2 <- p2 %>%
@@ -639,7 +685,7 @@ p2
 
 p3 <- plot_ly() %>%
   add_lines(data = TabelaAgregados, x = ~Data, y = ~M3, name = "M3", color = I("yellow")) %>%
-  add_lines(data = TabelaAgregados, x = ~Data, y = ~IPCA, name = "IPCA", color = I("pink"),
+  add_lines(data = TabelaAgregados, x = ~Data, y = ~rollmeanIPCA, name = "Média Móvel de 12 meses", color = I('purple2'),
             yaxis = "y2")
 
 p3 <- p3 %>%
@@ -658,9 +704,10 @@ p3
 # Fazendo o mesmo para M4 e IPCA
 
 
+
 p4 <- plot_ly() %>%
   add_lines(data = TabelaAgregados, x = ~Data, y = ~M4, name = "M4", color = I("orange")) %>%
-  add_lines(data = TabelaAgregados, x = ~Data, y = ~IPCA, name = "IPCA", color = I("pink"),
+  add_lines(data = TabelaAgregados, x = ~Data, y = ~rollmeanIPCA, name = "Média Móvel de 12 meses", color = I('purple2'),
             yaxis = "y2")
 
 p4 <- p4 %>%
@@ -713,6 +760,11 @@ Plotpib <- Plotpib %>%
 Plotpib
 ```
 
+<br><br>
+
+<br><br>
+
+
 ```{r echo=FALSE, message=FALSE, warning=FALSE}
 
 p <- plot_ly() %>%
@@ -736,12 +788,338 @@ p
 
 ```
 
+```{r echo = FALSE, message = FALSE, warning= FALSE}
+
+p5 <- plot_ly() %>%
+  add_lines(data = TabelaAgregados, x = ~Data, y = ~rollmeanSELIC, name = "Média Móvel SELIC", color = I('cyan4')) %>%
+  add_lines(data = TabelaAgregados, x = ~Data, y = ~rollmeanIPCA, name = "Média Móvel IPCA", color = I('purple2'),
+            yaxis = 'y2')
+
+p5 <- p5 %>%
+  layout(
+    title = "Comparação entre as médias móveis de 12 meses do IPCA e da SELIC",
+    yaxis = list(title = "SELIC"),
+    yaxis2 = list(
+      title = "IPCA",
+      overlaying = "y",
+      side = "right"
+    )
+  )
+
+p5
+
+
+
+```
+
+<br><br>
+<br><br>
+
 ```{r echo=FALSE, message=FALSE, warning=FALSE, results = 'hide'}
 write.xlsx(TabelaCoeficientes, "C:/Users/Lorenzo Costa/Desktop/Trabalhos/Economia Monetária/multiplicadorpt2/Tabela Coeficientes xslx")
   
 ```
 
 ### Análise Específica
+
+<br><br>
+
+#### Estatística dos Coeficientes
+
+<br><br>
+
+```{r echo = FALSE, message = FALSE, warning = FALSE}
+
+ImpcAgre <- TabelaAgregados %>%
+  slice(150:161)
+
+impcPib <- TabelaPIB %>%
+  slice(12:14)
+
+
+```
+<br><br>
+<br><br>
+
+#### Gráficos dos Coeficientes
+
+<br><br>
+
+```{r echo = FALSE, message = FALSE, warning = FALSE}
+
+
+Pipca <- plot_ly() %>%
+  add_lines( data = ImpcAgre, x = ~Data, y = ~IPCA, name = "IPCA",
+             color = I("pink")) %>%
+  add_lines(data = ImpcAgre, x = ~Data, y = ~rollmeanIPCA3, name = "Média Móvel IPCA de 3 meses", color = I("purple2"))
+
+Pipca <- Pipca %>%
+  layout(
+    title = "Média Móvel de 3 Meses do IPCA no Período de Análise",
+    yaxis = list(title = "Valores IPCA")
+    )
+
+Pipca
+
+
+Pagremon1 <- plot_ly() %>%
+  add_lines(data = ImpcAgre, x = ~Data, y = ~M1, name = "M1", color = I("green"))
+
+Pagremon1 <- Pagremon1 %>%
+   layout(
+    title = "Série Temporal dos Agregados Monetários",
+    yaxis = list(title = "Valores de M1")
+    )
+
+Pagremon1
+
+Pagremon2 <- plot_ly() %>%
+  add_lines(data = ImpcAgre, x = ~Data, y = ~M2, name = "M2", color = I("lawngreen")) 
+
+Pagremon2 <- Pagremon2 %>%
+   layout(
+    title = "Série Temporal dos Agregados Monetários",
+    yaxis = list(title = "Valores de M2")
+    )
+
+Pagremon2
+
+
+Pagremon3 <- plot_ly() %>%
+  add_lines(data = ImpcAgre, x = ~Data, y = ~M3, name = "M3", color = I("yellow"))
+
+
+Pagremon3 <- Pagremon3 %>%
+   layout(
+    title = "Série Temporal dos Agregados Monetários",
+    yaxis = list(title = "Valores de M3")
+    )
+
+Pagremon3
+
+Pagremon4 <- plot_ly() %>%
+  add_lines(data = ImpcAgre, x = ~Data, y = ~M4, name = "M4", color = I("orange"))
+
+Pagremon4 <- Pagremon4 %>%
+   layout(
+    title = "Série Temporal dos Agregados Monetários",
+    yaxis = list(title = "Valores de M4")
+    )
+
+Pagremon4
+
+
+
+```
+
+```{r echo = FALSE, message=FALSE, warning = FALSE, fig.width=14, fig.height=12, out.width='100%'}
+
+
+
+# criando multiplos ggplots
+# Formatando os próximos plots para saírem embutidos:
+par(mfrow = c(2, 2), oma = c(0, 0, 6, 0))
+
+
+
+#Criando uma gráfico plot com M1 e SELIC
+
+plot(ImpcAgre$Data, ImpcAgre$M1, type = "l",
+     col = "green", ylim = c(min(ImpcAgre$M1),
+                             max(ImpcAgre$M1)),
+     ylab = "M1", xlab = "Data", cex.lab = 2.0, cex.axis = 1.5)
+
+#sobrepondo esse gráfico com outro plot para a taxa selic
+
+par(new = TRUE)
+plot(ImpcAgre$Data, ImpcAgre$SELIC, type = "l",
+     col = "cyan", axes = FALSE, xlab = "", ylab = "",
+     ylim = c(min(ImpcAgre$SELIC),
+              max(ImpcAgre$SELIC)))
+
+#Criando um segundo eixo y para a taxa selic
+axis(side = 4, at = pretty(range(ImpcAgre$SELIC)))
+mtext("Taxa Selic (%)", side = 4, line = 3)
+
+
+
+### Fazendo o mesmo para M2 e SELIC
+
+plot(ImpcAgre$Data, ImpcAgre$M2, type = "l",
+    col = "lawngreen", ylim = c(min(ImpcAgre$M2),
+                                max(ImpcAgre$M2)),
+    ylab = "M2", xlab = "Data", cex.lab = 2.0, cex.axis = 1.5)
+par(new = TRUE)
+plot(ImpcAgre$Data, ImpcAgre$SELIC, type = "l",
+     col = "cyan", axes = FALSE, xlab = "", ylab = "",
+     ylim = c(min(ImpcAgre$SELIC),
+              max(ImpcAgre$SELIC)))
+axis(side =  4, at = pretty(range(ImpcAgre$SELIC)))
+mtext("Taxa Selic (%)", side = 4, line = 3)
+
+# Fazendo o mesmo para M3 e SELIC
+
+plot(ImpcAgre$Data, ImpcAgre$M3, type = "l",
+     col = "yellow", ylim = c(min(ImpcAgre$M3),
+                              max(ImpcAgre$M3)),
+     ylab = "M3", xlab = "Data", cex.lab = 2.0, cex.axis = 1.5)
+par(new = TRUE)
+plot(ImpcAgre$Data, ImpcAgre$SELIC, type = "l",
+     col = "cyan", axes = FALSE, xlab = "", ylab = "",
+     ylim = c(min(ImpcAgre$SELIC),
+              max(ImpcAgre$SELIC)))
+axis(side =  4, at = pretty(range(ImpcAgre$SELIC)))
+mtext("Taxa Selic (%)", side = 4, line = 3)
+
+# Fazendo o mesmo para M4 e SELIC
+
+plot(ImpcAgre$Data, ImpcAgre$M4, type = "l",
+     col = "orange", ylim = c(min(ImpcAgre$M4),
+                              max(ImpcAgre$M4)),
+     ylab = "M4", xlab = "Data", cex.lab = 2.0, cex.axis = 1.5)
+par(new = TRUE)
+plot(ImpcAgre$Data, ImpcAgre$SELIC, type = "l",
+     col = "cyan", axes = FALSE, xlab = "", ylab = "",
+     ylim = c(min(ImpcAgre$SELIC),
+              max(ImpcAgre$SELIC)))
+axis(side =  4, at = pretty(range(ImpcAgre$SELIC)))
+mtext("Taxa Selic (%)", side = 4, line = 3)
+
+par(mfrow = c(1,1))
+
+mtext("Comparação Entre os Agregados e a Selic", outer = TRUE, cex = 1.5, line = 2)
+
+
+```
+<br><br>
+
+
+
+
+```{r echo = FALSE, message=FALSE, warning=FALSE, fig.width=4, fig.height=4, out.width='100%'}
+
+#Criando uma gráfico plotly com M1 e IPCA 
+
+p9 <- plot_ly() %>%
+  add_lines(data = ImpcAgre, x = ~Data, y = ~M1, name = "M1", color = I("green")) %>%
+  add_lines(data = ImpcAgre, x = ~Data, y = ~rollmeanIPCA3, name = "Média Móvel de 3 meses", color = I('purple2'),
+            yaxis = "y2")
+
+p9 <- p9 %>%
+  layout(
+    title = "M1 em relação ao IPCA",
+    yaxis = list(title = "M1"),
+    yaxis2 = list(
+      title = "IPCA",
+      overlaying = "y",
+      side = "right"
+    )
+  )
+
+p9
+
+# Fazendo o mesmo para M2 e IPCA
+
+p6 <- plot_ly() %>%
+  add_lines(data = ImpcAgre, x = ~Data, y = ~M2, name = "M2", color = I("lawngreen")) %>%
+  add_lines(data = ImpcAgre, x = ~Data, y = ~rollmeanIPCA3, name = "Média Móvel de 3 meses", color = I('purple2'),
+            yaxis = "y2")
+
+p6 <- p6 %>%
+  layout(
+    title = "M2 em relação ao IPCA",
+    yaxis = list(title = "M2"),
+    yaxis2 = list(
+      title = "IPCA",
+      overlaying = "y",
+      side = "right"
+    )
+  )
+
+p6
+
+# Fazendo o mesmo para M3 e IPCA
+
+
+p7 <- plot_ly() %>%
+  add_lines(data = ImpcAgre, x = ~Data, y = ~M3, name = "M3", color = I("yellow")) %>%
+  add_lines(data = ImpcAgre, x = ~Data, y = ~rollmeanIPCA3, name = "Média Móvel de 3 meses", color = I('purple2'),
+            yaxis = "y2")
+
+p7 <- p7 %>%
+  layout(
+    title = "M3 em relação ao IPCA",
+    yaxis = list(title = "M3"),
+    yaxis2 = list(
+      title = "IPCA",
+      overlaying = "y",
+      side = "right"
+    )
+  )
+
+p7
+
+# Fazendo o mesmo para M4 e IPCA
+
+
+
+p8 <- plot_ly() %>%
+  add_lines(data = ImpcAgre, x = ~Data, y = ~M4, name = "M4", color = I("orange")) %>%
+  add_lines(data = ImpcAgre, x = ~Data, y = ~rollmeanIPCA3, name = "Média Móvel de 3 meses", color = I('purple2'),
+            yaxis = "y2")
+
+p8 <- p8 %>%
+  layout(
+    title = "M4 em relação ao IPCA",
+    yaxis = list(title = "M4"),
+    yaxis2 = list(
+      title = "IPCA",
+      overlaying = "y",
+      side = "right"
+    )
+  )
+
+p8
+
+```
+
+
+
+
+```{r, echo=FALSE, message=FALSE, warning=FALSE}
+
+ colnames(impcPib)[colnames(impcPib) == "Variação Percentual (%)"] <- "Variação_Percentual"
+
+
+Plotpib2 <- plot_ly() %>%
+  add_lines(data = impcPib, x = ~Data, y = ~PIB_Valores_Correntes_milhoes, name = "PIB valores correntes(milhões)", color = I("darkblue")) %>%
+  add_lines(data = impcPib, x = ~Data, y = ~Variação_Percentual, name = "PIB em Variação Percentual (%)", yaxis = "y2", color = I("blue"))
+
+# Configuração do layout com múltiplos eixos Y
+Plotpib2 <- Plotpib2 %>%
+  layout(
+    autosize = F, # Desativa o dimensionamento automático
+    width = 800,  # Largura do gráfico em pixels
+    height = 600, # Altura do gráfico em pixels
+    margin = list(l = 50, r = 50, b = 100, t = 100, pad = 4),
+    title = "PIB e a variação nos anos próximos",
+    yaxis = list(title = "PIB a valores correntes"),
+    yaxis2 = list(
+      title = "PIB em Variação Percentual (%)",
+      overlaying = "y",
+      side = "right",
+      anchor = "free",
+      position = 1.00
+    )
+  )
+
+# Renderização do gráfico
+Plotpib2
+```
+
+<br><br>
+
+
 
 
 
