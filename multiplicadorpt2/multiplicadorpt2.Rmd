@@ -361,6 +361,119 @@ TabelaAgregados$rollmeanSELIC3 <- rollmean(TabelaAgregados$SELIC, 3, fill = NA, 
 
 ```  
   
+```{r echo = FALSE, message = FALSE, warning = FALSE}  
+  
+#MANIPULANDO OS DADOS DO MULTIPLICADOR BANCÀRIO
+  
+#class(TabelaResBan$value)
+#class(TabelaDepAvi$value)
+#class(TabelaMP$value)
+#class(TabelaBASE$value)
+#class(TabelaPMPP$value)
+
+#criando vetores para cada valor do MP, DV, ResBan, PPMP e BASE MONETARIA
+vetormp <- TabelaMP[[2]]
+vetordepavi <- TabelaDepAvi[[2]]
+vetorresban <- TabelaResBan[[2]]
+vetorPPMP <- TabelaPMPP[[2]]
+vetorBASE <- TabelaBASE[[2]]
+
+
+#formatando os vetores
+
+vetor_mp <- format(vetormp, big.mark = ".", decimal.mark = ",", scientific = FALSE)
+vetor_depavi <- format(vetordepavi, big.mark = ".", decimal.mark = ",", scientific = FALSE)
+vetor_resban <- format(vetorresban, big.mark = ".", decimal.mark = ",", scientific = FALSE)
+vetor_PPMP <- format(vetorPPMP, big.mark = ".", decimal.mark = ",", scientific = FALSE)
+vetor_BASE <- format(vetorBASE, big.mark = ".", decimal.mark = ",", scientific = FALSE)
+  
+#criação das séries temporais
+
+###SABEMOS QUE B = PMPP + ENCAIXES TOTAIS / LOGO ENCAIXES TOTAIS = B - PMPP
+
+#Função de subtração
+
+Z <- function(s, t){
+      Resultado = s - t
+      return(Resultado)
+}
+
+
+#criando um vetor com os encaixes técnicos
+
+VetorEncaixe <- mapply(Z, TabelaBASE[[2]], TabelaPMPP[[2]])
+
+#Tabela do vetor de encaxe
+
+TabelaEncaixe <- tibble(Data = dates, Valor = VetorEncaixe)
+
+#Formatando o vetor_encaixe
+
+Vetor_Encaixe <- format(VetorEncaixe, big.mark = ".", decimal.mark = ",", scientific = FALSE)
+
+
+### juntando todas as variáveis em uma tabela só
+
+TabelaBacen <- tibble(Data = dates, "Meios de Pagamentos" = vetor_mp, 
+            "Depositos a vista" = vetor_depavi, "Encaixes Totais" = Vetor_Encaixe)
+
+
+
+
+# Criando função para realizar o cálculo do coeficiente
+X <- function(x,y){
+  Resultado = x/y
+  return(Resultado)
+}
+
+
+
+Coeficiente_e <- mapply(X, TabelaEncaixe[[2]], TabelaDepAvi[[2]])
+
+Coeficiente_d <- mapply(X, TabelaDepAvi[,2], TabelaMP[,2])
+
+
+SerieTemporal_e <- tibble(data = dates, valor = Coeficiente_e)
+SerieTemporal_d <- tibble(data = dates, valor = Coeficiente_d)
+
+y <- function(d,e){
+  Resultado = 1/(1-d * (1-e))
+  return(Resultado)
+}
+
+Coeficientes <- tibble(data = dates, Valor_de_e = Coeficiente_e, Valor_de_d = Coeficiente_d)
+
+
+Multiplicador_mon <- mapply(y, Coeficientes[,3], Coeficientes[,2])
+SerieTemporal_alpha <- tibble(data = dates, valor = Multiplicador_mon)
+  
+
+MultiAnos <- SerieTemporal_alpha %>%
+  mutate(ano = lubridate::year(data)) %>%
+  group_by(ano) %>%
+  summarize(media_alpha = mean(valor))
+
+diff_multi <- diff(SerieTemporal_alpha$valor)
+percento_multi <- (diff_multi / head(SerieTemporal_alpha$valor, -1)) *100
+multi_vari <- c(NA, percento_multi)
+
+diff_multiano <- diff(MultiAnos$media_alpha)
+percento_multiano <- (diff_multiano / head(MultiAnos$media_alpha, -1)) *100
+multi_variano <- c(NA, percento_multiano)
+
+SerieTemporal_alpha <- SerieTemporal_alpha %>%
+  add_column("Variacao multi" = multi_vari, .after = 'valor')
+
+MultiAnos <- MultiAnos %>%
+  add_column("Variacao ano multi" = multi_variano, .after = 'media_alpha')
+
+
+impcmulti <- SerieTemporal_alpha %>%
+  slice(150:161)
+
+
+```  
+  
 <br><br>
 
 
@@ -779,6 +892,122 @@ p1
 ```
 <br><br>
 
+
+```{r echo = FALSE, message = FALSE, warning = FALSE}
+
+#Relação dos Agregados monetários com o multiplicador monetário dos 20 anos
+
+p50 <- plot_ly() %>%
+  add_lines(data = TabelaAnos, x = ~ano, y = ~`Variacao Percentual M1`, name = "M1 (%)", color = I("lawngreen")) %>%
+  add_lines(data = MultiAnos, x = ~ano, y = ~`Variacao ano multi`, name = "Multiplicador (%)", color = I("brown"))
+
+p50 <- p50 %>%
+  layout(
+    title = "M1 em relação ao multiplicador",
+    yaxis = list(title = "M1"),
+    yaxis2 = list(
+      title = "multiplicador",
+      overlaying = "y",
+      side = "right"
+    )
+  )
+
+p50
+
+p51 <- plot_ly() %>%
+  add_lines(data = TabelaAnos, x = ~ano, y = ~`Variacao Percentual M2`, name = "M2 (%)", color = I("green")) %>%
+  add_lines(data = MultiAnos, x = ~ano, y = ~`Variacao ano multi`, name = "Multiplicador (%)", color = I("brown"))
+
+p51 <- p51 %>%
+  layout(
+    title = "M2 em relação ao multiplicador",
+    yaxis = list(title = "M2"),
+    yaxis2 = list(
+      title = "multiplicador",
+      overlaying = "y",
+      side = "right"
+    )
+  )
+
+p51
+
+p52 <- plot_ly() %>%
+  add_lines(data = TabelaAnos, x = ~ano, y = ~`Variacao Percentual M3`, name = "M3 (%)", color = I("yellow")) %>%
+  add_lines(data = MultiAnos, x = ~ano, y = ~`Variacao ano multi`, name = "Multiplicador (%)", color = I("brown"))
+
+p52 <- p52 %>%
+  layout(
+    title = "M3 em relação ao multiplicador",
+    yaxis = list(title = "M3"),
+    yaxis2 = list(
+      title = "multiplicador",
+      overlaying = "y",
+      side = "right"
+    )
+  )
+
+p52
+
+p53 <- plot_ly() %>%
+  add_lines(data = TabelaAnos, x = ~ano, y = ~`Variacao Percentual M4`, name = "M4 (%)", color = I("orange")) %>%
+  add_lines(data = MultiAnos, x = ~ano, y = ~`Variacao ano multi`, name = "Multiplicador (%)", color = I("brown"))
+
+p53 <- p53 %>%
+  layout(
+    title = "M4 em relação ao multiplicador",
+    yaxis = list(title = "M4"),
+    yaxis2 = list(
+      title = "multiplicador",
+      overlaying = "y",
+      side = "right"
+    )
+  )
+
+p53
+
+```
+<br><br>
+
+```{r echo = FALSE, warning = FALSE, message = FALSE}
+
+
+vecm1pib <- mapply(X, TabelaAnos[[2]], TabelaAnos[[6]])
+vecm1pib <- vecm1pib / 1000000
+
+vecm2pib <- mapply(X, TabelaAnos[[3]], TabelaAnos[[6]])
+vecm2pib <- vecm2pib / 1000000
+
+vecm3pib <- mapply(X, TabelaAnos[[4]], TabelaAnos[[6]])
+vecm3pib <- vecm3pib / 1000000
+
+vecm4pib <- mapply(X, TabelaAnos[[5]], TabelaAnos[[6]])
+vecm4pib <- vecm4pib / 1000000
+
+Anos <- seq(2003, 2023, by = 1)
+
+tabeladiv <- tibble(Anos = Anos, "M1/PIB" = vecm1pib, "M2/PIB" = vecm2pib, "M3/PIB" = vecm3pib, "M4/PIB" = vecm4pib)
+
+P20 <- plot_ly() %>%
+  add_lines(data = tabeladiv, x = ~Anos, y = ~`M1/PIB`, name = "M1/PIB", color = I("lawngreen")) %>%
+  add_lines(data = tabeladiv, x = ~Anos, y = ~`M2/PIB`, name = "M2/PIB", color = I("green")) %>%
+  add_lines(data = tabeladiv, x = ~Anos, y = ~`M3/PIB`, name = "M3/PIB", color = I("yellow")) %>%
+  add_lines(data = tabeladiv, x = ~Anos, y = ~`M4/PIB`, name = "M4/PIB", color = I("orange"))
+
+P20 <- P20 %>%
+  layout(
+    title = "Relação dos Agregados Monetários com o PIB",
+    yaxis = list(title = "Agregados Monetários (M1, M2, M3, M4)"),
+      overlaying = "y",
+      side = "right"
+    )
+
+P20
+
+
+```
+
+<br><br>
+
 ```{r, echo=FALSE, message=FALSE, warning=FALSE}
 
 colnames(TabelaPIB)[colnames(TabelaPIB) == "PIB valores correntes(milhões)"] <- "PIB_Valores_Correntes_milhoes"
@@ -928,8 +1157,7 @@ kable(TabelaEstat_Ag, format = "html", longtable = TRUE, booktabs = TRUE) %>%
 
 Pipca <- plot_ly() %>%
   add_lines( data = ImpcAgre, x = ~Data, y = ~IPCA, name = "IPCA",
-             color = I("pink")) %>%
-  add_lines(data = ImpcAgre, x = ~Data, y = ~rollmeanIPCA3, name = "Média Móvel IPCA de 3 meses", color = I("purple2"))
+             color = I("pink"))
 
 Pipca <- Pipca %>%
   layout(
@@ -1252,6 +1480,128 @@ p8 <- p8 %>%
 p8
 
 ```
+
+<br><br>
+
+
+```{r echo = FALSE, message = FALSE, warning = FALSE}
+
+#Relação dos Agregados monetários com o multiplicador monetário dos 20 anos
+
+p54 <- plot_ly() %>%
+  add_lines(data = Variacoes_Percentuais, x = ~Data, y = ~`M1 (%)`, name = "M1 (%)", color = I("lawngreen")) %>%
+  add_lines(data = impcmulti, x = ~data, y = ~`Variacao multi`, name = "Multiplicador (%)", color = I("brown"))
+
+p54 <- p54 %>%
+  layout(
+    title = "M1 em relação ao multiplicador",
+    yaxis = list(title = "M1"),
+    yaxis2 = list(
+      title = "multiplicador",
+      overlaying = "y",
+      side = "right"
+    )
+  )
+
+p54
+
+p55 <- plot_ly() %>%
+  add_lines(data = Variacoes_Percentuais, x = ~Data, y = ~`M2 (%)`, name = "M2 (%)", color = I("green")) %>%
+  add_lines(data = impcmulti, x = ~data, y = ~`Variacao multi`, name = "Multiplicador (%)", color = I("brown"))
+
+p55 <- p55 %>%
+  layout(
+    title = "M2 em relação ao multiplicador",
+    yaxis = list(title = "M2"),
+    yaxis2 = list(
+      title = "multiplicador",
+      overlaying = "y",
+      side = "right"
+    )
+  )
+
+p55
+
+p56 <- plot_ly() %>%
+  add_lines(data = Variacoes_Percentuais, x = ~Data, y = ~`M3 (%)`, name = "M3 (%)", color = I("yellow")) %>%
+  add_lines(data = impcmulti, x = ~data, y = ~`Variacao multi`, name = "Multiplicador (%)", color = I("brown"))
+
+p56 <- p56 %>%
+  layout(
+    title = "M3 em relação ao multiplicador",
+    yaxis = list(title = "M3"),
+    yaxis2 = list(
+      title = "multiplicador",
+      overlaying = "y",
+      side = "right"
+    )
+  )
+
+p56
+
+p57 <- plot_ly() %>%
+  add_lines(data = Variacoes_Percentuais, x = ~Data, y = ~`M4 (%)`, name = "M4 (%)", color = I("orange")) %>%
+  add_lines(data = impcmulti, x = ~data, y = ~`Variacao multi`, name = "Multiplicador (%)", color = I("brown"))
+
+p57 <- p57 %>%
+  layout(
+    title = "M4 em relação ao multiplicador",
+    yaxis = list(title = "M4"),
+    yaxis2 = list(
+      title = "multiplicador",
+      overlaying = "y",
+      side = "right"
+    )
+  )
+
+p57
+
+```
+
+<br><br>
+
+
+```{r echo = FALSE, warning = FALSE, message = FALSE}
+
+
+vecm1pib2 <- mapply(X, TabelaAgregados[[2]], TabelaAgregados[[6]])
+vecm1pib2 <- vecm1pib2 / 1000000
+
+vecm2pib2 <- mapply(X, TabelaAgregados[[3]], TabelaAgregados[[6]])
+vecm2pib2 <- vecm2pib2 / 1000000
+
+vecm3pib2 <- mapply(X, TabelaAgregados[[4]], TabelaAgregados[[6]])
+vecm3pib2 <- vecm3pib2 / 1000000
+
+vecm4pib2 <- mapply(X, TabelaAgregados[[5]], TabelaAgregados[[6]])
+vecm4pib2 <- vecm4pib2 / 1000000
+
+Anos <- seq(2003, 2023, by = 1)
+
+tabeladiv2 <- tibble(Anos = dates, "M1/PIB" = vecm1pib2, "M2/PIB" = vecm2pib2, "M3/PIB" = vecm3pib2, "M4/PIB" = vecm4pib2)
+
+tabeladiv2 <- tabeladiv2 %>%
+  slice(150:161)
+
+P21 <- plot_ly() %>%
+  add_lines(data = tabeladiv2, x = ~Anos, y = ~`M1/PIB`, name = "M1/PIB", color = I("lawngreen")) %>%
+  add_lines(data = tabeladiv2, x = ~Anos, y = ~`M2/PIB`, name = "M2/PIB", color = I("green")) %>%
+  add_lines(data = tabeladiv2, x = ~Anos, y = ~`M3/PIB`, name = "M3/PIB", color = I("yellow")) %>%
+  add_lines(data = tabeladiv2, x = ~Anos, y = ~`M4/PIB`, name = "M4/PIB", color = I("orange"))
+
+P21 <- P21 %>%
+  layout(
+    title = "Relação dos Agregados Monetários com o PIB",
+    yaxis = list(title = "Agregados Monetários (M1, M2, M3, M4)"),
+      overlaying = "y",
+      side = "right"
+    )
+
+P21
+
+
+```
+
 <br><br>
 
 ```{r, echo=FALSE, message=FALSE, warning=FALSE}
@@ -1283,6 +1633,8 @@ Plotpib2 <- Plotpib2 %>%
 
 # Renderização do gráfico
 Plotpib2
+
+
 ```
 
 <br><br>
