@@ -215,153 +215,6 @@ TabelaAgregados <- tibble( Data = dates, "M1" = vetor_M1, "M2" = vetor_M2, "M3" 
 vetorestat <- c("Max", "Min", "Mean", "sd")
 
 vetorestatVARI <- c("Max", "Min", "Mean", "sd", "HighestVariance(%)", "LowestVariance(%)")
-
-
-```
-<br><br>
-
-### Tabela dos Agregados Monetários, Taxa Selic e PIB
-
-```{r echo = FALSE, message = FALSE, warning = FALSE, results = 'asis'}
-kable(TabelaAgregados, format = "html", longtable = TRUE, booktabs = TRUE, caption = "Valores dos Agregados e Selic") %>%
-  kable_styling(bootstrap_options = c("striped", "hover", "condensed"))
-
-
-```
-
-<br><br>
-
-
-```{r echo = FALSE, message = FALSE, warning = FALSE}
-#str(TabelaAgregados$M1)
-#sapply(TabelaAgregados, class)
-
-
-
-# retirando os "." para milhares e reformatando para voltarem a ser variáveis numéricas. IPCA e SELIC já vieram com
-#separadores de decimais e já são consideradas numerics naturalmente, então não precisa. 
-
-TabelaAgregados$M1 <- as.numeric(gsub("\\.", "", TabelaAgregados$M1))
-TabelaAgregados$M2 <- as.numeric(gsub("\\.", "", TabelaAgregados$M2))
-TabelaAgregados$M3 <- as.numeric(gsub("\\.", "", TabelaAgregados$M3))
-TabelaAgregados$M4 <- as.numeric(gsub("\\.", "", TabelaAgregados$M4))
-TabelaPIB$`PIB valores correntes(milhões)` <- as.numeric(gsub("\\.", "", TabelaPIB$`PIB valores correntes(milhões)`))
-#
-
-```
-#### Variação Percentual dos Agregados
-
-```{r echo = FALSE, message = FALSE, warning = FALSE}
-
-#Criação das variações no tempo dos agregados
-
-diffM1 <- diff(TabelaAgregados$M1)
-percentoM1 <- (diffM1 / head(TabelaAgregados$M1, -1)) * 100
-M1vari <- c(NA, percentoM1)
-
-diffM2 <- diff(TabelaAgregados$M2)
-percentoM2 <- (diffM2 / head(TabelaAgregados$M2, -1)) * 100
-M2vari <- c(NA, percentoM2)
-
-diffM3 <- diff(TabelaAgregados$M3)
-percentoM3 <- (diffM3 / head(TabelaAgregados$M3, -1)) * 100
-M3vari <- c(NA, percentoM3)
-
-diffM4 <- diff(TabelaAgregados$M4)
-percentoM4 <- (diffM4 / head(TabelaAgregados$M4, -1)) * 100
-M4vari <- c(NA, percentoM4)
-
-diffIPCA <- diff(TabelaAgregados$IPCA)
-percentoIPCA <- (diffIPCA / head(TabelaAgregados$IPCA, -1)) * 100
-IPCAvari <- c(NA, percentoIPCA)
-
-diffSELIC <- diff(TabelaAgregados$SELIC)
-percentoSELIC <- (diffSELIC / head(TabelaAgregados$SELIC, -1)) * 100
-SELICvari <- c(NA, percentoSELIC)
-
-diffproj <- diff(TabelaAgregados$`PIB projeção`)
-percentoproj <- (diffproj / head(TabelaAgregados$`PIB projeção`, -1)) *100
-projvari <- c(NA, percentoproj)
-
-#Criação da Tabela das variações percentuais
-
-VariacoesPercentuais <- tibble(Data = dates, "M1 (%)" = M1vari, "M2 (%)" = M2vari, "M3 (%)" = M3vari, "M4 (%)" = M4vari,
-                              "PIB (%)" = projvari, "IPCA (%)" = IPCAvari, "SELIC (%)" = SELICvari)
-
-
-
-#Criação da Tabela em HTML
-
-kable(VariacoesPercentuais, format = "html", booktabs = TRUE) %>%
-  kable_styling(bootstrap_options = c( "hover", "condensed", "stripped"))
-
-```
-
-#### Estatística dos Agregados Monetários
-
-```{r echo = FALSE, message = FALSE, warning = FALSE}
-#TabelaAgregados$SELIC <- as.numeric(sub(",", ".", gsub("\\.", "", TabelaAgregados$SELIC), fixed = TRUE))
-#
-#Criando a Tabela de estatística para A TabelaAgregados, que já são numéricos. (só é possível tirar essa estatística de valores numéricos)
-
-#sapply(TabelaAgregados, class)
-
-#summary(TabelaAgregados)
-#sapply(TabelaAgregados, sd)
-#summary(TabelaPIB)
-#sapply(TabelaPIB, sd)
-
-#max(VariacoesPercentuais$M1, na.rm = TRUE)
-#max(VariacoesPercentuais$M2, na.rm = TRUE)
-#max(VariacoesPercentuais$M3, na.rm = TRUE)
-#max(VariacoesPercentuais$M4, na.rm = TRUE)
-#max(TabelaPIB$`Variação Percentual`, na.rm = TRUE)
-#max(TabelaAgregados$IPCA)
-#min(VariacoesPercentuais$M1, na.rm = TRUE)
-#min(VariacoesPercentuais$M2, na.rm = TRUE)
-#min(VariacoesPercentuais$M3, na.rm = TRUE)
-#min(VariacoesPercentuais$M4, na.rm = TRUE)
-#min(TabelaPIB$`Variação Percentual`, na.rm = TRUE)
-#min(TabelaAgregados$IPCA)
-
-#min(VariacoesPercentuais$`IPCA (%)`[is.finite(VariacoesPercentuais$`IPCA (%)`)], na.rm = TRUE)
-
-estatM1 <- c("653.420.212", "86.231.763", "311.848.406", "160.128.500", "22.87 (2007-12)", "-17.58 (2008-01)")
-estatM2 <- c("5.913.356.669", "385.467.653", "2.066.000.000", "1.407.171.000", "6.36 (2007-12)", "-3.12 (2008-01)")
-estatM3 <- c("10.857.133.543", "696.054.502", "4.239.000.000", "2.822.259.000", "5.73 (2010-01)", "-1.26 (2019-01)")
-estatM4 <- c("11.948.284.621", "810.272.451", "4.616.000.000", "3.046.371.000", " 4.49 (2007-09)", "-0.87 (2019-01)")
-estatPIB <- c("949003", "125711", "446063", "219.889,5", "13.42 (2004-03)", "-10,74 (2020-04)")
-estatIPCA <- c("2.250 (2003-01)" , "-0.680 (2022-07)", "0.450", "0,3563829", "2400 (2014-08)" ,"-1350 (2005-07)")
-estatSELIC <- c("26.32 (2003-03)", "1.90 (2020-12)", "11.44", "4.863212", "-17.53 (2020-05)", "24.15 (2021-05)")
-
-TabelaEstatAg <- tibble(Estatística = vetorestatVARI, M1 = estatM1, M2 = estatM2, M3 = estatM3, M4 = estatM4,
-                        "PIB(milhões)" = estatPIB, IPCA = estatIPCA, SELIC = estatSELIC)
-kable(TabelaEstatAg, format = "html", longtable = TRUE, booktabs = TRUE) %>%
-  kable_styling(bootstrap_options = c( "stripped", "hover", "condensed"), font_size = 12)
-
-```
-
-```{r, echo = FALSE, message = FALSE, warning = FALSE, results='hide'}
-
-#Colocando os valores em decimais para fazer o cálculo da média móvel
-
-#sapply(TabelaAgregados, class)
-TabelaAgregados <- as.data.frame(TabelaAgregados)
-
-  
-
-#Fazendo a média móvel (12meses)
-TabelaAgregados$rollmeanIPCA <- rollmean(TabelaAgregados$IPCA, 12, fill = NA, align = 'right')
-TabelaAgregados$rollmeanSELIC <- rollmean(TabelaAgregados$SELIC, 12, fill = NA, align = 'right')
-
-TabelaAgregados$rollmeanIPCA3 <- rollmean(TabelaAgregados$IPCA, 3, fill = NA, align = 'right')
-TabelaAgregados$rollmeanSELIC3 <- rollmean(TabelaAgregados$SELIC, 3, fill = NA, align = 'right')
-
-
-
-```  
-  
-```{r echo = FALSE, message = FALSE, warning = FALSE}  
   
 #MANIPULANDO OS DADOS DO MULTIPLICADOR BANCÀRIO
   
@@ -473,11 +326,250 @@ impcmulti <- SerieTemporal_alpha %>%
 
 
 ```  
+
+Observação: Para a análise geral, com o objetivo de melhor visualizaçao dos efeitos, foram realizado os gráficos com valores de médias anuais obtidos de valores mensais das variáveis. Para a análise específica, permaneceram os valores mensais das variáveis.
+
+<br><br>
+
+### Tabela dos Agregados Monetários, Taxa Selic e PIB
+
+```{r echo = FALSE, message = FALSE, warning = FALSE, results = 'asis'}
+kable(TabelaAgregados, format = "html", longtable = TRUE, booktabs = TRUE, caption = "Valores dos Agregados e Selic") %>%
+  kable_styling(bootstrap_options = c("striped", "hover", "condensed"))
+
+
+```
+
+<br><br>
+
+
+```{r echo = FALSE, message = FALSE, warning = FALSE}
+#str(TabelaAgregados$M1)
+#sapply(TabelaAgregados, class)
+
+
+
+# retirando os "." para milhares e reformatando para voltarem a ser variáveis numéricas. IPCA e SELIC já vieram com
+#separadores de decimais e já são consideradas numerics naturalmente, então não precisa. 
+
+TabelaAgregados$M1 <- as.numeric(gsub("\\.", "", TabelaAgregados$M1))
+TabelaAgregados$M2 <- as.numeric(gsub("\\.", "", TabelaAgregados$M2))
+TabelaAgregados$M3 <- as.numeric(gsub("\\.", "", TabelaAgregados$M3))
+TabelaAgregados$M4 <- as.numeric(gsub("\\.", "", TabelaAgregados$M4))
+TabelaPIB$`PIB valores correntes(milhões)` <- as.numeric(gsub("\\.", "", TabelaPIB$`PIB valores correntes(milhões)`))
+#
+
+```
+#### Variação Percentual dos Agregados
+
+```{r echo = FALSE, message = FALSE, warning = FALSE}
+
+#Criação das variações no tempo dos agregados
+
+diffM1 <- diff(TabelaAgregados$M1)
+percentoM1 <- (diffM1 / head(TabelaAgregados$M1, -1)) * 100
+M1vari <- c(NA, percentoM1)
+
+diffM2 <- diff(TabelaAgregados$M2)
+percentoM2 <- (diffM2 / head(TabelaAgregados$M2, -1)) * 100
+M2vari <- c(NA, percentoM2)
+
+diffM3 <- diff(TabelaAgregados$M3)
+percentoM3 <- (diffM3 / head(TabelaAgregados$M3, -1)) * 100
+M3vari <- c(NA, percentoM3)
+
+diffM4 <- diff(TabelaAgregados$M4)
+percentoM4 <- (diffM4 / head(TabelaAgregados$M4, -1)) * 100
+M4vari <- c(NA, percentoM4)
+
+diffIPCA <- diff(TabelaAgregados$IPCA)
+percentoIPCA <- (diffIPCA / head(TabelaAgregados$IPCA, -1)) * 100
+IPCAvari <- c(NA, percentoIPCA)
+
+diffSELIC <- diff(TabelaAgregados$SELIC)
+percentoSELIC <- (diffSELIC / head(TabelaAgregados$SELIC, -1)) * 100
+SELICvari <- c(NA, percentoSELIC)
+
+diffproj <- diff(TabelaAgregados$`PIB projeção`)
+percentoproj <- (diffproj / head(TabelaAgregados$`PIB projeção`, -1)) *100
+projvari <- c(NA, percentoproj)
+
+#Criação da Tabela das variações percentuais
+
+VariacoesPercentuais <- tibble(Data = dates, "M1 (%)" = M1vari, "M2 (%)" = M2vari, "M3 (%)" = M3vari, "M4 (%)" = M4vari,
+                              "PIB (%)" = projvari, "IPCA (%)" = IPCAvari, "SELIC (%)" = SELICvari)
+
+
+
+#Criação da Tabela em HTML
+
+kable(VariacoesPercentuais, format = "html", booktabs = TRUE) %>%
+  kable_styling(bootstrap_options = c( "hover", "condensed", "stripped"))
+
+```
+
+<br><br>
+
+```{r echo = FALSE, message = FALSE, warning = FALSE}
+#TabelaAgregados$SELIC <- as.numeric(sub(",", ".", gsub("\\.", "", TabelaAgregados$SELIC), fixed = TRUE))
+#
+#Criando a Tabela de estatística para A TabelaAgregados, que já são numéricos. (só é possível tirar essa estatística de valores numéricos)
+
+#sapply(TabelaAgregados, class)
+
+#summary(TabelaAgregados)
+#sapply(TabelaAgregados, sd)
+#summary(TabelaPIB)
+#sapply(TabelaPIB, sd)
+
+#max(VariacoesPercentuais$M1, na.rm = TRUE)
+#max(VariacoesPercentuais$M2, na.rm = TRUE)
+#max(VariacoesPercentuais$M3, na.rm = TRUE)
+#max(VariacoesPercentuais$M4, na.rm = TRUE)
+#max(TabelaPIB$`Variação Percentual`, na.rm = TRUE)
+#max(TabelaAgregados$IPCA)
+#min(VariacoesPercentuais$M1, na.rm = TRUE)
+#min(VariacoesPercentuais$M2, na.rm = TRUE)
+#min(VariacoesPercentuais$M3, na.rm = TRUE)
+#min(VariacoesPercentuais$M4, na.rm = TRUE)
+#min(TabelaPIB$`Variação Percentual`, na.rm = TRUE)
+#min(TabelaAgregados$IPCA)
+
+#min(VariacoesPercentuais$`IPCA (%)`[is.finite(VariacoesPercentuais$`IPCA (%)`)], na.rm = TRUE)
+
+TabelaAnos <- TabelaAgregados %>%
+  mutate(ano = lubridate::year(Data)) %>%
+  group_by(ano) %>%
+  summarize(media_m1 = mean(M1),
+            media_m2 = mean(M2),
+            media_m3 = mean(M3),
+            media_m4 = mean(M4),
+            media_proj = mean(`PIB projeção`),
+            media_selic = mean(SELIC),
+            media_ipca = mean(IPCA))
+
+
+vecm1pib <- mapply(X, TabelaAnos[[2]], TabelaAnos[[6]])
+vecm1pib <- vecm1pib / 1000000
+
+vecm2pib <- mapply(X, TabelaAnos[[3]], TabelaAnos[[6]])
+vecm2pib <- vecm2pib / 1000000
+
+vecm3pib <- mapply(X, TabelaAnos[[4]], TabelaAnos[[6]])
+vecm3pib <- vecm3pib / 1000000
+
+vecm4pib <- mapply(X, TabelaAnos[[5]], TabelaAnos[[6]])
+vecm4pib <- vecm4pib / 1000000
+
+Anos <- seq(2003, 2023, by = 1)
+
+tabeladiv <- tibble(Anos = Anos, "M1/PIB" = vecm1pib, "M2/PIB" = vecm2pib, "M3/PIB" = vecm3pib, "M4/PIB" = vecm4pib)
+
+estatM1 <- c("653.420.212", "86.231.763", "311.848.406", "160.128.500", "22.87 (2007-12)", "-17.58 (2008-01)")
+estatM2 <- c("5.913.356.669", "385.467.653", "2.066.000.000", "1.407.171.000", "6.36 (2007-12)", "-3.12 (2008-01)")
+estatM3 <- c("10.857.133.543", "696.054.502", "4.239.000.000", "2.822.259.000", "5.73 (2010-01)", "-1.26 (2019-01)")
+estatM4 <- c("11.948.284.621", "810.272.451", "4.616.000.000", "3.046.371.000", " 4.49 (2007-09)", "-0.87 (2019-01)")
+estatPIB <- c("949003", "125711", "446063", "219.889,5", "13.42 (2004-03)", "-10,74 (2020-04)")
+estatIPCA <- c("2.250 (2003-01)" , "-0.680 (2022-07)", "0.450", "0,3563829", "2400 (2014-08)" ,"-1350 (2005-07)")
+estatSELIC <- c("26.32 (2003-03)", "1.90 (2020-12)", "11.44", "4.863212", "-17.53 (2020-05)", "24.15 (2021-05)")
+
+
+#Fazer as diferenças percentuais do multiplicador e das divisões 
+
+diff_m1pib <- diff(tabeladiv$`M1/PIB`)
+percentual_m1pib <- (diff_m1pib / head(tabeladiv$`M1/PIB`, -1)) * 100
+vari_m1pib <- c(NA, percentual_m1pib)
+
+diff_m2pib <- diff(tabeladiv$`M2/PIB`)
+percentual_m2pib <- (diff_m2pib / head(tabeladiv$`M2/PIB`, -1)) * 100
+vari_m2pib <- c(NA, percentual_m2pib)
+
+diff_m3pib <- diff(tabeladiv$`M3/PIB`)
+percentual_m3pib <- (diff_m3pib / head(tabeladiv$`M3/PIB`, -1)) * 100
+vari_m3pib <- c(NA, percentual_m3pib)
+
+diff_m4pib <- diff(tabeladiv$`M4/PIB`)
+percentual_m4pib <- (diff_m4pib / head(tabeladiv$`M4/PIB`, -1)) * 100
+vari_m4pib <- c(NA, percentual_m4pib)
+
+variagregadoPIB <- tibble(Anos = Anos, "M1/PIB" = vari_m1pib, "M2/PIB" = vari_m2pib, "M3/PIB" = vari_m3pib, "M4/PIB" = vari_m4pib)
+
+#summary(SerieTemporal_alpha)
+#sapply(SerieTemporal_alpha, sd)
+#summary(tabeladiv)
+#sapply(tabeladiv, sd)
+#summary(variagregadoPIB)
+#sapply(variagregadoPIB, sd)
+
+estatmulti <- c("1,604", "1,242", "1,426", "0,0816", "16,46 (2003-08)", "-10,14(2022-01")
+estatm1pib <- c("0,0008273", "0,0006133", "0,0006986", "0,00006429", "32.22 (2020)", "-12.09 (2022)")
+estatm2pib <- c("0,006028", "0,002708", "0,004183", "0,0006028", "19.92 (2020)", "-4.48 (2010)")
+estatm3pib <- c("0,011661", "0,005252", "0,008570", "0,002040", "10.56 (2020)", "-4.47 (2021)")
+estatm4pib <- c("0,012508", "0,006013", "0,009388", "0,002083", "9.66 (2020)", "-3.21 (2021)")
+
+TabelaEstaAgPib <- tibble(Estatística = vetorestatVARI, "Multiplicador" = estatmulti, "M1/PIB" = estatm1pib, 
+                          "M2/PIB" = estatm2pib, "M3/PIB" = estatm3pib, "M4/PIB" = estatm4pib)
+
+TabelaEstatAg <- tibble(Estatística = vetorestatVARI, M1 = estatM1, M2 = estatM2, M3 = estatM3, M4 = estatM4,
+                        "PIB(milhões)" = estatPIB, IPCA = estatIPCA, SELIC = estatSELIC)
+
+tabeladiv <- tabeladiv %>%
+  add_column( "(%)M1/PIB" = vari_m1pib, "(%)M2/PIB" = vari_m2pib, "(%)M3/PIB" = vari_m3pib, "(%)M4/PIB" = vari_m4pib,
+              .after = "M4/PIB")
+
+kable(tabeladiv, format = "html", longtable = TRUE, booktabs = TRUE) %>%
+  kable_styling(bootstrap_options = c( "stripped", "hover", "condensed"))
+
+```
+<br><br>
+
+
+#### Estatística dos Agregados Monetários (Mensal)
+
+
+```{r, echo = FALSE, message = FALSE, warning = FALSE}
+
+kable(TabelaEstatAg, format = "html", longtable = TRUE, booktabs = TRUE) %>%
+  kable_styling(bootstrap_options = c( "stripped", "hover", "condensed"), font_size = 12)
+
+
+```
+<br><br>
+
+
+#### Relação dos Agregados Monetários com o PIB em médias anuais
+
+```{r echo = FALSE, message = FALSE, warning = FALSE}
+
+kable(TabelaEstaAgPib, format = "html", longtable = TRUE, booktabs = TRUE) %>%
+  kable_styling(bootstrap_options = c("stripped", "hover", "condesed"))
+
+```
+
+```{r, echo = FALSE, message = FALSE, warning = FALSE, results='hide'}
+
+#Colocando os valores em decimais para fazer o cálculo da média móvel
+
+#sapply(TabelaAgregados, class)
+TabelaAgregados <- as.data.frame(TabelaAgregados)
+
+  
+
+#Fazendo a média móvel (12meses)
+TabelaAgregados$rollmeanIPCA <- rollmean(TabelaAgregados$IPCA, 12, fill = NA, align = 'right')
+TabelaAgregados$rollmeanSELIC <- rollmean(TabelaAgregados$SELIC, 12, fill = NA, align = 'right')
+
+TabelaAgregados$rollmeanIPCA3 <- rollmean(TabelaAgregados$IPCA, 3, fill = NA, align = 'right')
+TabelaAgregados$rollmeanSELIC3 <- rollmean(TabelaAgregados$SELIC, 3, fill = NA, align = 'right')
+
+
+
+```  
   
 <br><br>
 
 
-#### Gráficos dos Agregados Monetários, Taxa Selic e PIB
+#### Gráficos dos Agregados Monetários, Taxa Selic e PIB em valores anuais
 
 
 ```{r echo = FALSE, message = FALSE, warning=FALSE}
@@ -659,17 +751,6 @@ mtext("Comparação Entre os Agregados e a Selic", outer = TRUE, cex = 1.5, line
 #O PIB em projeção mensal também será agregado em anos
 # Análise específica
 
-TabelaAnos <- TabelaAgregados %>%
-  mutate(ano = lubridate::year(Data)) %>%
-  group_by(ano) %>%
-  summarize(media_m1 = mean(M1),
-            media_m2 = mean(M2),
-            media_m3 = mean(M3),
-            media_m4 = mean(M4),
-            media_proj = mean(`PIB projeção`),
-            media_selic = mean(SELIC),
-            media_ipca = mean(IPCA))
-      
 
 #Realizando agora a variação anual das médias anuais que utilzaram os valores mensais.
 
@@ -971,21 +1052,6 @@ p53
 ```{r echo = FALSE, warning = FALSE, message = FALSE}
 
 
-vecm1pib <- mapply(X, TabelaAnos[[2]], TabelaAnos[[6]])
-vecm1pib <- vecm1pib / 1000000
-
-vecm2pib <- mapply(X, TabelaAnos[[3]], TabelaAnos[[6]])
-vecm2pib <- vecm2pib / 1000000
-
-vecm3pib <- mapply(X, TabelaAnos[[4]], TabelaAnos[[6]])
-vecm3pib <- vecm3pib / 1000000
-
-vecm4pib <- mapply(X, TabelaAnos[[5]], TabelaAnos[[6]])
-vecm4pib <- vecm4pib / 1000000
-
-Anos <- seq(2003, 2023, by = 1)
-
-tabeladiv <- tibble(Anos = Anos, "M1/PIB" = vecm1pib, "M2/PIB" = vecm2pib, "M3/PIB" = vecm3pib, "M4/PIB" = vecm4pib)
 
 P20 <- plot_ly() %>%
   add_lines(data = tabeladiv, x = ~Anos, y = ~`M1/PIB`, name = "M1/PIB", color = I("lawngreen")) %>%
@@ -1105,7 +1171,7 @@ p5
 
 <br><br>
 
-#### Estatística dos Agregados
+#### Estatística dos Agregados em valores mensais
 
 <br><br>
 
@@ -1113,6 +1179,55 @@ p5
 ```{r echo = FALSE, warning = FALSE, message=FALSE}
 
 kable(Variacoes_Percentuais, format = "html", booktabs = TRUE) %>%
+  kable_styling(bootstrap_options = c( "hover", "condensed", "stripped"))
+
+```
+
+<br><br>
+
+```{r echo = FALSE, warning = FALSE, message = FALSE}
+
+vecm1pib2 <- mapply(X, TabelaAgregados[[2]], TabelaAgregados[[6]])
+vecm1pib2 <- vecm1pib2 / 1000000
+
+vecm2pib2 <- mapply(X, TabelaAgregados[[3]], TabelaAgregados[[6]])
+vecm2pib2 <- vecm2pib2 / 1000000
+
+vecm3pib2 <- mapply(X, TabelaAgregados[[4]], TabelaAgregados[[6]])
+vecm3pib2 <- vecm3pib2 / 1000000
+
+vecm4pib2 <- mapply(X, TabelaAgregados[[5]], TabelaAgregados[[6]])
+vecm4pib2 <- vecm4pib2 / 1000000
+
+Anos <- seq(2003, 2023, by = 1)
+
+tabeladiv2 <- tibble(Anos = dates, "M1/PIB" = vecm1pib2, "M2/PIB" = vecm2pib2, "M3/PIB" = vecm3pib2, "M4/PIB" = vecm4pib2)
+
+tabeladiv2 <- tabeladiv2 %>%
+  slice(150:161)
+
+diff_divm1 <- diff(tabeladiv2$`M1/PIB`)
+percento_divm1 <- (diff_divm1 / head(tabeladiv2$`M1/PIB`, -1)) * 100
+vari_divm1 <- c(NA, percento_divm1)
+
+diff_divm2 <- diff(tabeladiv2$`M2/PIB`)
+percento_divm2 <- (diff_divm2 / head(tabeladiv2$`M1/PIB`, -1)) * 100
+vari_divm2 <- c(NA, percento_divm2)
+
+diff_divm3 <- diff(tabeladiv2$`M3/PIB`)
+percento_divm3 <- (diff_divm3 / head(tabeladiv2$`M1/PIB`, -1)) * 100
+vari_divm3 <- c(NA, percento_divm3)
+
+diff_divm4 <- diff(tabeladiv2$`M4/PIB`)
+percento_divm4 <- (diff_divm4 / head(tabeladiv2$`M1/PIB`, -1)) * 100
+vari_divm4 <- c(NA, percento_divm4)
+
+tabeladiv2 <- tabeladiv2 %>%
+  add_column("(%)M1/PIB" = vari_divm1, "(%)M2/PIB" = vari_divm2, "(%)M3/PIB" = vari_divm3, "(%)M4/PIB" = vari_divm4,
+             .after = "M4/PIB")
+  
+
+kable(tabeladiv2, format = "html", booktabs = TRUE) %>%
   kable_styling(bootstrap_options = c( "hover", "condensed", "stripped"))
 
 ```
@@ -1139,16 +1254,23 @@ imp_SELIC <- c("14.15 (2015-08)", "13.58 (2015-06)", "14.06", "0,2018306", "3.36
 
 
 
+
 TabelaEstat_Ag <- tibble(Estatística = vetorestatVARI, M1 = imp_m1, M2 = imp_m2, M3 = imp_m3, M4 = imp_m4,
                         "PIB(milhões)" = imp_PIB, IPCA = imp_IPCA, SELIC = imp_SELIC)
+
+
+
 kable(TabelaEstat_Ag, format = "html", longtable = TRUE, booktabs = TRUE) %>%
   kable_styling(bootstrap_options = c( "stripped", "hover", "condensed"), font_size = 12)
+
+
+
 
 ```
 
 <br><br>
 
-#### Gráficos
+#### Gráficos em valores mensais
 
 <br><br>
 
@@ -1562,26 +1684,6 @@ p57
 
 
 ```{r echo = FALSE, warning = FALSE, message = FALSE}
-
-
-vecm1pib2 <- mapply(X, TabelaAgregados[[2]], TabelaAgregados[[6]])
-vecm1pib2 <- vecm1pib2 / 1000000
-
-vecm2pib2 <- mapply(X, TabelaAgregados[[3]], TabelaAgregados[[6]])
-vecm2pib2 <- vecm2pib2 / 1000000
-
-vecm3pib2 <- mapply(X, TabelaAgregados[[4]], TabelaAgregados[[6]])
-vecm3pib2 <- vecm3pib2 / 1000000
-
-vecm4pib2 <- mapply(X, TabelaAgregados[[5]], TabelaAgregados[[6]])
-vecm4pib2 <- vecm4pib2 / 1000000
-
-Anos <- seq(2003, 2023, by = 1)
-
-tabeladiv2 <- tibble(Anos = dates, "M1/PIB" = vecm1pib2, "M2/PIB" = vecm2pib2, "M3/PIB" = vecm3pib2, "M4/PIB" = vecm4pib2)
-
-tabeladiv2 <- tabeladiv2 %>%
-  slice(150:161)
 
 P21 <- plot_ly() %>%
   add_lines(data = tabeladiv2, x = ~Anos, y = ~`M1/PIB`, name = "M1/PIB", color = I("lawngreen")) %>%

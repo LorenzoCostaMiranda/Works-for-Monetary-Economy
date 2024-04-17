@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.26 (MiKTeX 24.3) (preloaded format=pdflatex 2024.3.17)  16 APR 2024 00:10
+This is pdfTeX, Version 3.141592653-2.6-1.40.26 (MiKTeX 24.3) (preloaded format=pdflatex 2024.3.17)  16 APR 2024 23:58
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -487,15 +487,15 @@ Package hyperref Info: Link coloring OFF on input line 42.
 * layout: <same size as paper>
 * layoutoffset:(h,v)=(0.0pt,0.0pt)
 * modes: 
-* h-part:(L,W,R)=(85.35826pt, 472.03123pt, 56.9055pt)
-* v-part:(T,H,B)=(56.9055pt, 681.15898pt, 56.9055pt)
+* h-part:(L,W,R)=(28.45274pt, 557.38951pt, 28.45274pt)
+* v-part:(T,H,B)=(28.45274pt, 738.0645pt, 28.45274pt)
 * \paperwidth=614.295pt
 * \paperheight=794.96999pt
-* \textwidth=472.03123pt
-* \textheight=681.15898pt
-* \oddsidemargin=13.08827pt
-* \evensidemargin=13.08827pt
-* \topmargin=-52.36449pt
+* \textwidth=557.38951pt
+* \textheight=738.0645pt
+* \oddsidemargin=-43.81725pt
+* \evensidemargin=-43.81725pt
+* \topmargin=-80.81725pt
 * \headheight=12.0pt
 * \headsep=25.0pt
 * \topskip=12.0pt
@@ -516,8 +516,8 @@ Package hyperref Info: Link coloring OFF on input line 42.
 [1
 
 {C:/Users/Lorenzo Costa/AppData/Local/MiKTeX/fonts/map/pdftex/pdftex.map}{C:/Us
-ers/Lorenzo Costa/AppData/Local/Programs/MiKTeX/fonts/enc/dvips/base/8r.enc}] [
-2] (multiplicadorpt2.aux)
+ers/Lorenzo Costa/AppData/Local/Programs/MiKTeX/fonts/enc/dvips/base/8r.enc}] (
+multiplicadorpt2.aux)
  ***********
 LaTeX2e <2023-06-01> patch level 1
 L3 programming layer <2023-08-29>
@@ -526,19 +526,19 @@ Package rerunfilecheck Info: File `multiplicadorpt2.out' has not changed.
 (rerunfilecheck)             Checksum: D41D8CD98F00B204E9800998ECF8427E;0.
  ) 
 Here is how much of TeX's memory you used:
- 14179 strings out of 475248
- 279550 string characters out of 5754001
+ 14178 strings out of 475248
+ 279544 string characters out of 5754001
  1927785 words of memory out of 5000000
  35546 multiletter control sequences out of 15000+600000
  566300 words of font info for 43 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 75i,5n,80p,1568b,886s stack positions out of 10000i,1000n,20000p,200000b,200000s
+ 75i,5n,80p,1779b,885s stack positions out of 10000i,1000n,20000p,200000b,200000s
 <C:/Users/Lorenzo Costa/AppData/Local/Programs/MiKTeX/fonts/type1/urw/times/u
 tmb8a.pfb><C:/Users/Lorenzo Costa/AppData/Local/Programs/MiKTeX/fonts/type1/urw
 /times/utmr8a.pfb>
-Output written on multiplicadorpt2.pdf (2 pages, 36249 bytes).
+Output written on multiplicadorpt2.pdf (1 page, 36034 bytes).
 PDF statistics:
- 26 PDF objects out of 1000 (max. 8388607)
- 3 named destinations out of 1000 (max. 500000)
+ 22 PDF objects out of 1000 (max. 8388607)
+ 2 named destinations out of 1000 (max. 500000)
  1 words of extra memory for PDF output out of 10000 (max. 10000000)
 
