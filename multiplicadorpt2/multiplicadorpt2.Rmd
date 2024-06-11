@@ -417,7 +417,7 @@ kable(VariacoesPercentuais, format = "html", booktabs = TRUE) %>%
 
 #sapply(TabelaAgregados, class)
 
-#ummary(TabelaAgregados)
+#summary(TabelaAgregados)
 #sapply(TabelaAgregados, sd)
 #summary(TabelaPIB)
 #sapply(TabelaPIB, sd)
