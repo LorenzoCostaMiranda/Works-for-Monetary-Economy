@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.25 (MiKTeX 24.1) (preloaded format=pdflatex 2024.5.25)  11 JUN 2024 00:23
+This is pdfTeX, Version 3.141592653-2.6-1.40.25 (MiKTeX 24.1) (preloaded format=pdflatex 2024.5.25)  13 JUN 2024 00:53
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1210,7 +1210,7 @@ or `english'. on input line 32.
 Package hyperref Info: Option `breaklinks' set `true' on input line 58.
 Package hyperref Info: Option `raiselinks' set `true' on input line 58.
 Package hyperref Info: Option `pageanchor' set `true' on input line 58.
-<logouft.pdf, id=46, 214.401pt x 241.48618pt>
+<logouft.pdf, id=50, 214.401pt x 241.48618pt>
 File: logouft.pdf Graphic file (type pdf)
 <use logouft.pdf>
 Package pdftex.def Info: logouft.pdf  used on input line 58.
@@ -1229,25 +1229,12 @@ Cap\'{\i }tulo 1.
 
 
 ]
-Overfull \hbox (10.98824pt too wide) in paragraph at lines 105--105
-|[]\T1/aer/m/n/12 Novo Con-senso Ma-cro-e-con�-mico e sua Re-vi-s�o a par-tir d
-a Crise Fi-nan-ceira 2007/2008| 
- []
-
-
 pdfTeX warning (ext4): destination with the same identifier (name{page.1}) has 
 been already used, duplicate ignored
 <to be read again> 
                    \relax 
-l.118 
-       [1] [2] [3] [4]
-LaTeX Info: Symbol \textasciiacute not provided by
-            font family aer in TS1 encoding.
-            Default family used instead on input line 180.
-LaTeX Info: Symbol \textasciiacute not provided by
-            font family aer in TS1 encoding.
-            Default family used instead on input line 180.
- [5] [6]
+l.114 
+       [1] [2] [3] [4] [5] [6] [7] [8]
 
 enddocument/afterlastpage: lastpage setting LastPage.
 (Fichamento Seminário de Economia Monetária.aux)
@@ -1257,24 +1244,23 @@ L3 programming layer <2024-01-04>
  ***********
 Package rerunfilecheck Info: File `"Fichamento Seminário de Economia Monetári
 a".out' has not changed.
-(rerunfilecheck)             Checksum: 3612502A8CDD59CA574346EE338D0619;1716.
+(rerunfilecheck)             Checksum: 8A00C0BBE6B14F37F22900C3E63E3BEB;1793.
  ) 
 Here is how much of TeX's memory you used:
- 50566 strings out of 474486
- 1185493 string characters out of 5760144
- 1934542 words of memory out of 5000000
- 72173 multiletter control sequences out of 15000+600000
- 569649 words of font info for 55 fonts, out of 8000000 for 9000
+ 50559 strings out of 474486
+ 1185397 string characters out of 5760144
+ 1935542 words of memory out of 5000000
+ 72168 multiletter control sequences out of 15000+600000
+ 567163 words of font info for 51 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 105i,5n,107p,857b,961s stack positions out of 10000i,1000n,20000p,200000b,200000s
- <C:\Users\Lorenzo Costa\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi
-600\tcrm1200.pk><C:/miktex/fonts/type1/public/amsfonts/cm/cmb10.pfb><C:/miktex/
-fonts/type1/public/amsfonts/cm/cmr10.pfb><C:/miktex/fonts/type1/public/amsfonts
-/cm/cmr12.pfb><C:/miktex/fonts/type1/public/amsfonts/cm/cmti12.pfb>
-Output written on "Fichamento Seminário de Economia Monetária.pdf" (8 pages, 
-193343 bytes).
+ 105i,6n,107p,857b,940s stack positions out of 10000i,1000n,20000p,200000b,200000s
+<C:/miktex/fonts/type1/public/amsfonts/cm/cmb10.pfb><C:/miktex/fonts/type1/pu
+blic/amsfonts/cm/cmr12.pfb><C:/miktex/fonts/type1/public/amsfonts/cm/cmti12.pfb
+>
+Output written on "Fichamento Seminário de Economia Monetária.pdf" (10 pages,
+ 175138 bytes).
 PDF statistics:
- 123 PDF objects out of 1000 (max. 8388607)
- 19 named destinations out of 1000 (max. 500000)
- 98 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 124 PDF objects out of 1000 (max. 8388607)
+ 21 named destinations out of 1000 (max. 500000)
+ 106 words of extra memory for PDF output out of 10000 (max. 10000000)
 
