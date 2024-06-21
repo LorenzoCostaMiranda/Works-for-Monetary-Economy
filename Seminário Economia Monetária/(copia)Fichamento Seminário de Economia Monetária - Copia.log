@@ -1,9 +1,9 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.25 (MiKTeX 24.1) (preloaded format=pdflatex 2024.5.25)  19 JUN 2024 17:43
+This is pdfTeX, Version 3.141592653-2.6-1.40.25 (MiKTeX 24.1) (preloaded format=pdflatex 2024.5.25)  20 JUN 2024 00:08
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
-**"./Fichamento Seminário de Economia Monetária.tex"
-(Fichamento Seminário de Economia Monetária.tex
+**"./(copia)Fichamento Seminário de Economia Monetária - Copia.tex"
+((copia)Fichamento Seminário de Economia Monetária - Copia.tex
 LaTeX2e <2023-11-01> patch level 1
 L3 programming layer <2024-01-04>
 (uftex.cls
@@ -1077,23 +1077,26 @@ LaTeX Info: Redefining \cite on input line 618.
 \ABCItoken=\toks52
 )
 \@losfile=\write4
-\openout4 = `"Fichamento Seminário de Economia Monetária.syx"'.
+\openout4 = `"(copia)Fichamento Seminário de Economia Monetária - Copia.syx"'
+.
 
 
-Writing index of symbols file "Fichamento Seminário de Economia Monetária".sy
-x
+Writing index of symbols file "(copia)Fichamento Seminário de Economia Monetá
+ria - Copia".syx
 \@labfile=\write5
-\openout5 = `"Fichamento Seminário de Economia Monetária.abx"'.
+\openout5 = `"(copia)Fichamento Seminário de Economia Monetária - Copia.abx"'
+.
 
-Writing index of abbreviations file "Fichamento Seminário de Economia Monetár
-ia".abx
+Writing index of abbreviations file "(copia)Fichamento Seminário de Economia M
+onetária - Copia".abx
 LaTeX Font Info:    Trying to load font information for T1+aer on input line 32
 .
 (C:\miktex\tex/latex/ae\t1aer.fd
 File: t1aer.fd 1997/11/16 Font definitions for T1/aer.
 )
-(Fichamento Seminário de Economia Monetária.aux)
-\openout1 = `"Fichamento Seminário de Economia Monetária.aux"'.
+((copia)Fichamento Seminário de Economia Monetária - Copia.aux)
+\openout1 = `"(copia)Fichamento Seminário de Economia Monetária - Copia.aux"'
+.
 
 LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 32.
 LaTeX Font Info:    ... okay on input line 32.
@@ -1184,10 +1187,11 @@ Package pdflscape Info: Auto-detected driver: pdftex on input line 81.
 * (1in=72.27pt=25.4mm, 1cm=28.453pt)
 
 Package hyperref Info: Link coloring ON on input line 32.
-(Fichamento Seminário de Economia Monetária.out)
-(Fichamento Seminário de Economia Monetária.out)
+((copia)Fichamento Seminário de Economia Monetária - Copia.out)
+((copia)Fichamento Seminário de Economia Monetária - Copia.out)
 \@outlinefile=\write6
-\openout6 = `"Fichamento Seminário de Economia Monetária.out"'.
+\openout6 = `"(copia)Fichamento Seminário de Economia Monetária - Copia.out"'
+.
 
 Package caption Info: Begin \AtBeginDocument code.
 Package caption Info: End \AtBeginDocument code.
@@ -1210,7 +1214,7 @@ or `english'. on input line 32.
 Package hyperref Info: Option `breaklinks' set `true' on input line 58.
 Package hyperref Info: Option `raiselinks' set `true' on input line 58.
 Package hyperref Info: Option `pageanchor' set `true' on input line 58.
-<logouft.pdf, id=50, 214.401pt x 241.48618pt>
+<logouft.pdf, id=10, 214.401pt x 241.48618pt>
 File: logouft.pdf Graphic file (type pdf)
 <use logouft.pdf>
 Package pdftex.def Info: logouft.pdf  used on input line 58.
@@ -1220,9 +1224,15 @@ Package pdftex.def Info: logouft.pdf  used on input line 58.
 
 {C:/Users/Lorenzo Costa/AppData/Local/MiKTeX/fonts/map/pdftex/pdftex.map} <./lo
 gouft.pdf>]
-No file "Fichamento Seminário de Economia Monetária".los.
-No file "Fichamento Seminário de Economia Monetária".lab.
+No file "(copia)Fichamento Seminário de Economia Monetária - Copia".los.
+No file "(copia)Fichamento Seminário de Economia Monetária - Copia".lab.
 Cap\'{\i }tulo 1.
+
+Overfull \hbox (9.82503pt too wide) in paragraph at lines 83--84
+\T1/aer/m/n/12 cos quanto a re-for-mu-la-��o do NCM, con-tra-ponto a ideia ori-
+gi-nal do mo-delo e desconstruindo-
+ []
+
 [0
 
 
@@ -1233,34 +1243,33 @@ pdfTeX warning (ext4): destination with the same identifier (name{page.1}) has
 been already used, duplicate ignored
 <to be read again> 
                    \relax 
-l.114 
-       [1] [2] [3] [4] [5] [6] [7] [8]
-
+l.98 
+      [1] [2] [3] 
 enddocument/afterlastpage: lastpage setting LastPage.
-(Fichamento Seminário de Economia Monetária.aux)
+((copia)Fichamento Seminário de Economia Monetária - Copia.aux)
  ***********
 LaTeX2e <2023-11-01> patch level 1
 L3 programming layer <2024-01-04>
  ***********
-Package rerunfilecheck Info: File `"Fichamento Seminário de Economia Monetári
-a".out' has not changed.
-(rerunfilecheck)             Checksum: 8A00C0BBE6B14F37F22900C3E63E3BEB;1793.
+Package rerunfilecheck Info: File `"(copia)Fichamento Seminário de Economia Mo
+netária - Copia".out' has not changed.
+(rerunfilecheck)             Checksum: 32F5B0E67A11116BC419A072BB668A97;92.
  ) 
 Here is how much of TeX's memory you used:
- 50561 strings out of 474486
- 1185429 string characters out of 5760144
+ 50519 strings out of 474486
+ 1185224 string characters out of 5760144
  1935542 words of memory out of 5000000
- 72170 multiletter control sequences out of 15000+600000
+ 72143 multiletter control sequences out of 15000+600000
  567163 words of font info for 51 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 105i,6n,107p,857b,940s stack positions out of 10000i,1000n,20000p,200000b,200000s
+ 105i,5n,107p,1394b,940s stack positions out of 10000i,1000n,20000p,200000b,200000s
 <C:/miktex/fonts/type1/public/amsfonts/cm/cmb10.pfb><C:/miktex/fonts/type1/pu
 blic/amsfonts/cm/cmr12.pfb><C:/miktex/fonts/type1/public/amsfonts/cm/cmti12.pfb
 >
-Output written on "Fichamento Seminário de Economia Monetária.pdf" (10 pages,
- 175133 bytes).
+Output written on "(copia)Fichamento Seminário de Economia Monetária - Copia.
+pdf" (5 pages, 148426 bytes).
 PDF statistics:
- 124 PDF objects out of 1000 (max. 8388607)
- 21 named destinations out of 1000 (max. 500000)
- 106 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 58 PDF objects out of 1000 (max. 8388607)
+ 6 named destinations out of 1000 (max. 500000)
+ 26 words of extra memory for PDF output out of 10000 (max. 10000000)
 

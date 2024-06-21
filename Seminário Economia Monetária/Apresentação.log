@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.25 (MiKTeX 24.1) (preloaded format=pdflatex 2024.5.25)  13 JUN 2024 00:53
+This is pdfTeX, Version 3.141592653-2.6-1.40.25 (MiKTeX 24.1) (preloaded format=pdflatex 2024.5.25)  21 JUN 2024 16:54
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1102,7 +1102,7 @@ Package rerunfilecheck Info: File `Apresentação.out' has not changed.
  ) 
 Here is how much of TeX's memory you used:
  31652 strings out of 474486
- 657960 string characters out of 5760144
+ 657954 string characters out of 5760144
  1941542 words of memory out of 5000000
  53310 multiletter control sequences out of 15000+600000
  560998 words of font info for 48 fonts, out of 8000000 for 9000
@@ -1113,7 +1113,7 @@ blic/amsfonts/cm/cmr12.pfb><C:/miktex/fonts/type1/public/amsfonts/cm/cmr5.pfb><
 C:/miktex/fonts/type1/public/amsfonts/cm/cmr7.pfb><C:/miktex/fonts/type1/public
 /amsfonts/cm/cmti10.pfb><C:/miktex/fonts/type1/public/amsfonts/symbols/msam10.p
 fb>
-Output written on Apresentação.pdf (15 pages, 223834 bytes).
+Output written on Apresentação.pdf (15 pages, 223534 bytes).
 PDF statistics:
  620 PDF objects out of 1000 (max. 8388607)
  35 named destinations out of 1000 (max. 500000)

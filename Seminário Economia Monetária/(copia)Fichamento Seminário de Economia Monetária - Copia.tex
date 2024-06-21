@@ -1,0 +1,118 @@
+% ----------------------------------------------------------------------------------------------------- %
+% Manual da Classe UFTeX
+% 
+% Versão 2.1:   Março 2018
+%
+% Criado por:   Tiago da Silva Almeida
+% Revisado por: Tiago da Silva Almeida
+%               Rafael Lima de Carvalho
+%               Ary Henrique Morais de Oliveira
+%
+% https://almeidatiago.github.io/uftex/
+% ----------------------------------------------------------------------------------------------------- %
+
+\documentclass[report]{uftex}
+% ---- Esse comando cria o nome uftex estilizado
+\newcommand\uftex{UF\TeX}
+
+\usepackage{lipsum}
+\usepackage{tikz}
+\usepackage{enumitem}
+\usepackage[siunitx]{circuitikz}
+\usetikzlibrary{arrows}
+
+\usepackage[alf,abnt-emphasize=bf]{abntex2cite}
+\renewcommand{\backrefpagesname}{}
+\renewcommand{\backref}{}
+\renewcommand*{\backrefalt}[4]{}
+% ----  Esse comandos são necessário no pré-ambulo para a impressão da lista de lista abreviatuas e de símbolos
+\makelosymbols
+\makeloabbreviations
+% ---- Início do documento
+\begin{document}
+  % ---- Descrição do título do trabalho 
+  \title{Fichamento: Uma breve
+  	revisão do Novo Consenso Macroeconômico
+  	a partir da crise de 2007/08 : questionamentos internos
+  	acerca da condução da política econômica pós-crise}
+  % ---- Nome do autor ou autores do trabalho
+  \author{Lorenzo}{Costa Miranda}
+  % ---- Nome do orientador do trabalho. O último campo representa o título do professor
+  % ---- Departamento representa o curso ao qual o trabalho está sendo apresentado. Descrito por meio de duas iniciais do curso
+  \department{CE}
+  % ---- Data da apresentação do trabalho
+  \date{08}{06}{2024}
+  % ---- Palavras-chaves em português do trabalho
+  \keyword{\LaTeX}
+  \keyword{\uftex}
+  \keyword{Trabalho de Conclusão de Curso}
+  \keyword{Redação Científica}
+  \keyword{Extensão Universitária}
+  % ---- Palavras-chaves em inglês do trabalho
+  \foreignkeyword{\LaTeX}
+  \foreignkeyword{\uftex}
+  \foreignkeyword{Bachelor Thesis}
+  \foreignkeyword{Scientific Writing}
+  \foreignkeyword{University Extension}
+  % ---- Comando responsável por criar a capa do trabalho e/ou folha de resto conforme a configuração exigida
+  \maketitle
+
+  \frontmatter
+
+  \printlosymbols  
+  \printloabbreviations
+  % ---- Cria a lista de figuras. OPCIONAL
+  %\listoffigures
+  % ---- Cria a lista de tabelas. OPCIONAL
+  %\listoftables 
+  % ---- Cria o sumário. OBRIGATÓRIO
+ 
+% --- Marca o inicio dos elementos textuais. Capítulos.
+\mainmatter
+% ---- Defino o espaçamento de um e meio centímetros
+\onehalfspacing
+% ----------------------------------------------------------------------------------------------------- %
+% Capítulos do trabalho
+% ----------------------------------------------------------------------------------------------------- %
+\chapter{Fichamento}
+
+O novo consenso macroeconômico (NCM) é um conjunto de escolas de economia que buscaram definir regras e objetivos a serem alcançados por parte do Banco Central. A principal contribuição do NCM é ditar uma forma operacional correta da política monetária (PM) e definir um regime de metas de inflação (RMI) acorrentada ao BC, cuja sua principal função consolidou-se como estabilidade e controle de preços da economia. Dentre o arcabouço teórico que contempla o NCM, estão uma parte dos monetaristas, os novos clássicos, os novos keynesianos e o modelo de ciclos reais de negócios. Todos eles convergem para a manutenção do regime de metas de inflação e impõem um papel firmado ao BC. 
+
+Entretanto, quando ocorre a crise de 2008/2009 o novo consenso macroeconômico é atacado e, de certa forma, duvidado quanto à garantia da estabilidade econômica que este dizia fornecer. Diversos autores passaram a questionar alguns aspectos das teorias e afirmaram que o NCM deveria passar por uma revisão e uma atualização nas suas formas operacionais das políticas, assim como outros buscam conservar o modelo inicialmente proposto, afirmando que momento assim não são suficientes para que seja preciso reformular as ideias. 
+
+Assim, como método, o artigo visa demonstrar o debate entre pensadores econômicos quanto a reformulação do NCM, contraponto a ideia original do modelo e desconstruindo-a, e evidenciar o engano sobre a garantia da estabilidade econômica que iniciou-se nos anos de 1980, mas não permaneceu no início do século XXI. Dessa forma, a obra irá evidenciar as contribuições quanto as diversas políticas e as revisões propostas após a crise. 
+
+Primeiramente, quanto à política econômica, muitos economistas \textit{mainstream} acreditavam que, no momento pós crise, as metas de taxas de inflação de longo prazo poderiam aumentar, como por exemplo de 2\% a.a para 4\% a.a, com o fito de aumentar a eficácia da política monetária e ampliando o espaço de possibilidades de utilização de taxas de juro de curto prazo, que vinham sendo descredibilizadas no decorrer da crise. Entretanto, isso não está livre de custos, como mudanças estruturais na economia, redução da oferta real de moeda, maior volatilidade da inflação, decorrente do sistema fiscal que não é neutro etc.
+
+Porém, Mikshin afirma que elevar as metas levará a uma tendência de elevação da inflação para níveis maiores que os custos associados à taxas de juros próximas do limite inferior, e dado as circunstâncias, os benefícios dessa prática seriam menores que de uma inflação mais baixa. Essa inflação em um nível elevado apresentará um alto custo futuramente. 
+
+Segundamente, há críticas quanto a utilização de um único índice de inflação atrelados e comparados ao produto e aos preços dos ativos. Pois, é possível que a inflação esteja constante, e o produto variando, ou que a inflação e o produto estejam constantes, porém os preços dos ativos estejam flutuando, o que, se adotado como pilar da política monetária por parte do Banco Central, pode dar uma falsa segurança quanto à previsão dos ciclos econômicos. Porém, Taylor discorda tanto da primeira quanto da segunda, pois tais medidas em um aumento de dívida pública e expansão do balancete do BC (maior emissão monetária) poderiam reduzir Significativamente a credibilidade na meta de inflação e consequentemente a independência do BC.
+
+O terceiro ponto é em relação à conduta da política monetária para controlar o preço dos ativos financeiros em que alguns consideram a taxa de juros (único e principal instrumento de política monetária, desconsiderando a comunicação) pouco sensível às variações de preços dos ativos, de modo que teria pouca efetividade para controlar o excesso de alavancagem das instituições financeiras, aumentando o risco dessa economia. Por isso, não bastava simplesmente elevar em demasia as taxas de juros para propor reduzir o risco dos agentes econômicos, pois isso implicaria em um impacto profundo no produto do país. Ademais, aceitava-se a “doutrina greenspan”, que afirmava que o banco central só deveria atuar de forma mais intervencionista, ou com políticas não convencionais após a estoura da bolha e a ruptura financeira, ao invés de “inclinar-se contra o vento” e utilizar políticas preventivas de crise ou que reduzissem a sua magnitude. E juntando com o fato de que é muito difícil diferenciar aumento dos preços dos ativos por causa de movimentos especulativos e criações de bolhas de alterações nos princípios de oferta e demanda, Mikshin propõe que a política monetária deveria ser instrumento para mitigar bolhas, ou seja, agir antes de seu estouro.
+
+Mikshin afirma que a política monetária crível tem que estar atrelada à redução de incerteza e mitigação do risco macroeconômico. O BC poderia manter o compromisso com as metas de inflação de longo prazo, mas deve utilizar políticas de taxas de juros de curto prazo para prevenir a ocorrência de rupturas financeiras. Woodford propõe uma nova meta ao RMI, que agora deveria estar com a finalidade de estabilidade financeira. 
+
+Quanto à questão de sinalização e expectativa. Alguns autores afirmam da inconsistência temporal das políticas do BC. Eles afirmam que no NCM, havia um compromisso muito forte por parte dos Bancos Centrais quanto às taxas de juros de curto prazo serem menores que as taxas de juros futuras, seria como uma orientação pra frente, o que permitia uma inflação elevada mais a frente. Entretanto, a autoridade monetária poderia não cumprir com esse compromisso e elevar suas taxas de juros desregulando as expectativas e realizando um impacto na credibilidade da instituição por parte dos agentes.
+
+Por isso, seria interessante que ocorresse uma comunicação objetiva quanto a operação da política monetária para o gerenciamento das expectativas dos agentes. Bernake e Yellen concordam com esse argumento sobre inconsistência temporal e que o BC deveria se relacionar com o público e explicar a condução da PM que está baseada nas condições econômicas vigente e na conjuntura atual e que pode ser modificada a medida que as condições se alteram. Clarida, entretanto, concorda que isso ainda resultará em descredibilidade da política monetária e consequentemente do BC pois isso seria percebido pelo público, comprometendo a ancoragem da inflação, e que a melhor forma seria, segundo Woodford, realizar uma meta de PIB nominal calculado por meio da multiplicação do hiato do produto e de uma meta de inflação para gerir as expectativas. 
+
+Quanto à política financeira, para reforçar a separação entre a política financeira e a política monetária no regime de metas inflacionárias, foi utilizado o ``princípio de Tinbergen" que afirma que, no objetivo de controlar diversas variáveis, deve-se utilizar somente uma, ou seja, gerir somente um instrumento para estabilizar a economia. Assim, a política financeira ficou de lado em detrimento da monetária, e atribuiu-se a regulamentação microprudencial das instituições depositárias, mas que não impediam elas de afetar a atividade econômica por meio do canal de crédito. Esse tipo de regulamentação mostrou vulnerabilidade da política monetária no momento de pré-crise. Nenhuma instituição tinha poder de adotar alguma medida macroprudencial. 
+
+Segundo Blanchard, a regulamentação microprudencial não leva em conta as interações entre as instituições financeiras, o setor financeiro e a economia real. Porém, o RMI não precisa ser reprovado como estrutura de política econômica, mas deve complementar outros instrumentos, rejeitando assim o princípio de Tinbergen. O ideal é coordenar a política monetária e a regulamentação macroprudencial com a política financeira e essa responsabilidade deve ser auferida ao BC. Uma política macroprudencial restritiva para conter bolhas de crédito promove a redução do crédito e da demanda agregada e pode ser compensada por uma PM que minimize o efeito sobre a redução agregada, e vice versa, ou então iniciar com uma taxa de juros baixa de curto prazo, e amenizar os efeitos com políticas macroprudenciais mais rígidas.
+
+Contudo, essa posição não é aceita por Taylor, que critica a utilização de políticas regulatórias para lidar com booms de crédito ou preços dos ativos e defende a regulamentação convencional. Para ele, a taxa de juros ainda é o principal instrumento para impedir as situações de crise, a utilização de políticas financeiras promove a perda de independência do BC.
+
+Em relação à política fiscal, verificou-se que foi um instrumento anticíclico importante em momentos de taxas de juros muito baixas. Em 2008, foi a única alternativa disponível para estimular a economia. Os multiplicadores fiscais se sobressaem quando a política monetária alcança níveis próximos ou abaixo de zero quanto à eficácia. Blanchard e Summer propõem o maior ativismo fiscal. Entretanto, muitas nações acabaram por gerar muitos déficits orçamentários e não optaram por cobrar impostos elevados no futuro, mas sim por ou emissão de moeda, ou monetização da dívida por parte do BC. De qualquer modo, a dominância fiscal, e o possível default da dívida, elevariam o nível de preços e pressionaria o RMI.
+
+Mikshin ainda defende a utilização da política fiscal, porém, no pós-crise deverá promover uma redução do nível de endividamento e manter a função de sustentabilidade do orçamento. Blanchard defende a revisão do papel da política fiscal para instrumento anticíclico, e nos momentos de prosperidade e crescimento econômico deverá preazr pela redução da dívida/PIB. 
+
+No que tange a política cambial, o RMI era quem determinava sua utilização. Os países desenvolvidos utilizavam o câmbio flexível e a política cambial era em maioria das vezes deixada de lado, e só de fato importava na medida em que afetava o nível de preços e consequentemente o RMI. Variações cambiais que promovessem a desvalorização da moeda interna se tornava preocupação do BC, que deveria intervir. Porém, em países emergentes, que sofrem mudanças repentinas em seus câmbios devido ao corte do fluxo de capitais externos na economia, a política cambial deveria ser utilizada de forma mais flexível. Ostry, entretanto, nega esse argumento e afirma que descredibiliza a política monetária e consequentemente o BC. Porém, outros autores afirmam que a meta da taxa de câmbio real e a intervenção estatal são um segundo componente do RMI para lidar com as alterações dos fluxos de capitais, afrouxando assim alguns critérios do NCM e dando mais espaço às economias subdesenvolvidas. 
+
+Quanto aos modelos de ciclos reais dos negócios, as críticas se concentram nos modelos DSGE - dinâmicos estocásticos de equilíbrio geral. As revisões se baseiam, primeiramente, na desaprovação da teoria da política monetária ótima, a partir da maximização de uma função linear dos desvios de inflação e do produto, por causa dos eventos da crise terem demonstrado que a economia não tem comportamento linear da distribuição de Gauss, afirmando que os riscos de cauda são muito mais relevantes do que se suponha. A segunda questão é referente à necessidade dos modelos DSGE de incorporarem possibilidade de fricções financeiras e abandonar a estrutura de agente representativo. Portanto, a estrutura baseada em um agente padronizado tem sido deixada de lado, concebendo o fato de que esses captarem ocorrências de fricções financeiras na crise é causa de uma modelagem inapropriada.
+
+Woodford contribui com a ideia de que o modelo padrão do NCM deveria tratar os eventos de crise como elementos endógenos que impacta a instabilidade financeira e a função política do BC. Deveria ser considerado um fator pensado para o comportamento do BC.
+
+De modo geral, essas novas proposições afrouxam e relaxam as proposições iniciais do NCM, a revisão contesta alguns aspectos, porém, a estrutura e a essência do NCM permanecem consolidados. Precisa passar por algumas manutenções, mas sua natureza continua na maioria dos Bancos Centrais do mundo.  
+ 
+
+\end{document}
