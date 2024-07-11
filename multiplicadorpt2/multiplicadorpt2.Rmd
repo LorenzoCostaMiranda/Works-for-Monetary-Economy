@@ -437,7 +437,7 @@ kable(VariacoesPercentuais, format = "html", booktabs = TRUE) %>%
 
 #min(VariacoesPercentuais$`IPCA (%)`[is.finite(VariacoesPercentuais$`IPCA (%)`)], na.rm = TRUE)
 
-TabelaAnos <- TabelaAgregados %>%
+ co <- TabelaAgregados %>%
   mutate(ano = lubridate::year(Data)) %>%
   group_by(ano) %>%
   summarize(media_m1 = mean(M1),

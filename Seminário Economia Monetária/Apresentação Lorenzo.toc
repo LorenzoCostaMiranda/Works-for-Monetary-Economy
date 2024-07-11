@@ -1,0 +1,4 @@
+\beamer@sectionintoc {1}{Objetivo do Artigo}{3}{0}{1}
+\beamer@sectionintoc {2}{Introdução}{4}{0}{2}
+\beamer@sectionintoc {3}{Métodos e Arcabouço Teórico}{5}{0}{3}
+\beamer@sectionintoc {4}{Contribuição do Artigo}{9}{0}{4}

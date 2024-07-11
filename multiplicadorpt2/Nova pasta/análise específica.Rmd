@@ -1,0 +1,199 @@
+---
+title: "Gráficos e Tabelas do Multiplicador"
+author: "Lorenzo Costa Miranda"
+date: "2024-03-24"
+output: 
+  html_document:
+    toc: true
+    toc_float:
+      collapsed: false
+      smooth_scroll: true
+    toc_depth: 4
+---
+
+```{r include=FALSE, message=FALSE, warning=FALSE}
+library(zoo)
+library(plotly)
+library(htmltools)
+library(GetBCBData)
+library(dplyr)
+library(pandoc)
+library(ggplot2)
+library(tibble)
+library(tidyr)
+library(kableExtra)
+library(flextable)
+library(openxlsx)
+library(scales)
+library(reshape2)
+library(patchwork)
+library(corrplot)
+library(writexl)
+
+```
+
+```{r include=FALSE, message=FALSE, warning=FALSE}
+
+TabelaM1bim <- GetBCBData::gbcbd_get_series(
+  id = 27791,
+  first.date = "2005-01-01",
+  last.date = "2005-12-01"
+)
+
+TabelaM2bim <- GetBCBData::gbcbd_get_series(
+  id = 27810,
+  first.date = "2005-01-01",
+  last.date = "2005-12-01"
+)
+
+TabelaM3bim <- GetBCBData::gbcbd_get_series(
+  id = 27813,
+  first.date = "2005-01-01",
+  last.date = "2005-12-01"
+)
+
+TabelaM4bim <- GetBCBData::gbcbd_get_series(
+  id = 27815,
+  first.date = "2005-01-01",
+  last.date = "2005-12-01"
+)
+
+TabelaIPCAbim <- GetBCBData::gbcbd_get_series(
+  id = 433,
+  first.date = "2005-01-01",
+  last.date = "2005-12-01"
+)
+
+TabelaSELICbim <- GetBCBData::gbcbd_get_series(
+  id = 4189,
+  first.date = "2005-01-01",
+  last.date = "2005-12-01"
+)
+
+Tabelaproj <- GetBCBData::gbcbd_get_series(
+  id = 4380,
+  first.date = "2005-01-01",
+  last.date = "2005-12-01"
+)
+
+```
+
+```{r include=FALSE, message=FALSE, warning=FALSE}
+
+bim <- c(1,2,3,4,5,6)
+
+Bimestre <- 2 
+
+#Dividir cada tabela de 1 ano dos agregados em 6 bimestres
+
+bimM1 <- tapply(TabelaM1bim$value, rep(1:(length(TabelaM1bim$value) %/%
+                                         Bimestre), each = Bimestre), sum)
+
+length(bimM1)
+
+bimM2 <- tapply(TabelaM2bim$value, rep(1:(length(TabelaM2bim$value) %/%
+                                         Bimestre), each = Bimestre), sum)
+
+bimM3 <- tapply(TabelaM3bim$value, rep(1:(length(TabelaM3bim$value) %/%
+                                         Bimestre), each = Bimestre), sum)
+
+bimM4 <- tapply(TabelaM4bim$value, rep(1:(length(TabelaM4bim$value) %/%
+                                         Bimestre), each = Bimestre), sum)
+
+SELICbim <- tapply(TabelaSELICbim$value, rep(1:(length(TabelaSELICbim$value) %/%
+                                                  Bimestre), each = Bimestre), sum)
+bimSELIC <- tibble(Data = bim, selic = SELICbim)
+
+bimSELIC$selic <- bimSELIC$selic / 2
+
+IPCAbim <- tapply(TabelaIPCAbim$value, rep(1:(length(TabelaIPCAbim$value) %/%
+                                                Bimestre), each = Bimestre), sum)
+
+bimIPCA <- tibble(Data = bim, ipca = IPCAbim)
+
+bimIPCA$ipca <- bimIPCA$ipca / 2
+
+```
+
+
+```{r include=FALSE, message=FALSE, warning=FALSE}
+
+div <- function(X, Y){
+  Resultado = X/Y
+  return(Resultado)
+}
+
+
+#Juntar as tabelas já divididas em bimestres e depois somar o valor dos agregados.
+
+#M1 e M2
+
+tabimM1M2 <- tibble(Data = bim, M1 = bimM1, M2 = bimM2)
+
+M1M2bim <- rowSums(tabimM1M2[, c("M1", "M2")])
+
+tabimM1M2 <- tibble(Data = bim, M1M2bim = M1M2bim)
+
+#M3 e M4
+
+tabimM3M4 <- tibble(Data = bim, M3 = bimM3, M4 = bimM4)
+
+M3M4bim <- rowSums(tabimM3M4[, c("M3", "M4")])
+
+tabimM3M4 <- tibble(Data = bim , M3M4bim = M3M4bim)
+
+TabelaG <- tibble(Data = bim, "M1M2" = tabimM1M2$M1M2bim, "M3M4" = tabimM3M4$M3M4bim)
+
+
+#Razão M1+M2/PIB e M3+M4/PIB
+
+
+#PIB em bimestre
+
+bimPIB <- tapply(Tabelaproj$value, rep(1:(length(Tabelaproj$value) %/%
+                                         Bimestre), each = Bimestre), sum)
+
+TabelaG$PIBproj <- bimPIB
+
+TabelaG$PIBproj <- TabelaG$PIBproj / 2
+
+#DVISÃO M1+M2/M3+M4 para relacionar com o PIB
+
+TabelaG$DIVagregados <- mapply(div, TabelaG[2], TabelaG[3])
+
+
+#Realizar variação dos valores
+
+TabelaG <- TabelaG %>%
+  mutate(percentM1M2 = (M1M2 - lag(M1M2)) / lag(M1M2) * 100)
+
+TabelaG <- TabelaG %>%
+  mutate(percentM3M4 = (M3M4 - lag(M3M4)) / lag(M3M4) * 100)
+
+TabelaG <- TabelaG %>%
+  mutate(percentPIB = (PIBproj - lag(PIBproj)) / lag(PIBproj) * 100)
+
+TabelaG <- TabelaG %>%
+  mutate(percentDIV = (DIVagregados - lag(DIVagregados)) / lag(DIVagregados) * 100)
+
+write_xlsx(TabelaG, path = "C:/Users/Lorenzo Costa/Desktop/Trabalhos/Trabalhos Economia Monetaria/multiplicadorpt2/Nova pasta/TabelaG.xlsx")
+
+summary(TabelaG)
+
+
+```
+
+
+```{r include=FALSE, message=FALSE, warning=FALSE}
+
+bimSELIC <- bimSELIC %>%
+  mutate(percetSELIC = (bimSELIC$selic - lag(bimSELIC$selic)) / lag(bimSELIC$selic) * 100)
+
+bimIPCA <- bimIPCA %>%
+  mutate(percentIPCA = (bimIPCA$ipca - lag(bimIPCA$ipca)) / lag(bimIPCA$ipca) * 100)
+
+write_xlsx(bimSELIC, path = "C:/Users/Lorenzo Costa/Desktop/Trabalhos/Trabalhos Economia Monetaria/multiplicadorpt2/Nova pasta/bimSELIC.xlsx")
+
+write_xlsx(bimIPCA, path = "C:/Users/Lorenzo Costa/Desktop/Trabalhos/Trabalhos Economia Monetaria/multiplicadorpt2/Nova pasta/bimIPCA.xlsx")
+
+```

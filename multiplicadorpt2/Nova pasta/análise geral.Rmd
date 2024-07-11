@@ -1,0 +1,278 @@
+---
+title: "Gráficos e Tabelas do Multiplicador"
+author: "Lorenzo Costa Miranda"
+date: "2024-03-24"
+output: 
+  html_document:
+    toc: true
+    toc_float:
+      collapsed: false
+      smooth_scroll: true
+    toc_depth: 4
+---
+
+```{r include=FALSE, message=FALSE, warning=FALSE}
+library(zoo)
+library(plotly)
+library(htmltools)
+library(GetBCBData)
+library(dplyr)
+library(pandoc)
+library(ggplot2)
+library(tibble)
+library(tidyr)
+library(kableExtra)
+library(flextable)
+library(openxlsx)
+library(scales)
+library(reshape2)
+library(patchwork)
+library(corrplot)
+library(writexl)
+
+```
+
+```{r include=FALSE, message=FALSE, warning=FALSE}
+##Pegando os dados necessários pelo ID 
+
+
+#reservas bancárias =/ Encaixes Totais
+TabelaResBan <- GetBCBData::gbcbd_get_series(
+  id =  1787,
+  first.date = "2003-01-01",
+  last.date = "2023-12-01"
+)
+
+#Papel Moeda no Poder Público
+
+TabelaPMPP <- GetBCBData::gbcbd_get_series(
+  id = 27789 ,
+  first.date = "2003-01-01",
+  last.date = "2023-12-01"
+)
+
+
+#Base monetária
+
+TabelaBASE <- GetBCBData::gbcbd_get_series(
+  id =  1788,
+  first.date = "2003-01-01",
+  last.date = "2023-12-01"
+)
+
+
+#Depósitos à vista
+TabelaDepAvi <- GetBCBData::gbcbd_get_series(
+ id =  27790,
+ first.date = "2003-01-01",
+ last.date = "2023-12-01"
+)
+
+#Meios de pagamento = PMPP + DV (TOTAL DE M1)
+TabelaMP <- GetBCBData::gbcbd_get_series(
+  id = 27791,
+  first.date = "2003-01-01",
+  last.date = "2023-12-01"
+)
+
+#M1
+TabelaM1 <- GetBCBData::gbcbd_get_series(
+  id = 27791,
+  first.date = "2003-01-01",
+  last.date = "2023-12-01"
+)
+
+#M2
+TabelaM2 <- GetBCBData::gbcbd_get_series(
+  id = 27810,
+  first.date = "2003-01-01",
+  last.date = "2023-12-01"
+)
+
+#M3
+TabelaM3 <- GetBCBData::gbcbd_get_series(
+  id = 27813,
+  first.date = "2003-01-01",
+  last.date = "2023-12-01"
+)
+
+#M4
+TabelaM4 <- GetBCBData::gbcbd_get_series(
+  id = 27815,
+  first.date = "2003-01-01",
+  last.date = "2023-12-01"
+)
+
+#IPCA
+TabelaIPCA <- GetBCBData::gbcbd_get_series(
+  id = 433,
+  first.date = "2003-01-01",
+  last.date = "2023-12-01"
+)
+
+#Taxa Selic
+
+TabelaSELIC <- GetBCBData::gbcbd_get_series(
+  id = 4189,
+  first.date = "2003-01-01",
+  last.date = "2023-12-01"
+)
+
+
+#Criando data para o período específico de análise
+
+dates_impc <- seq.Date(from = as.Date("2015-06-01"), to = as.Date("2016-05-01"), by = "month")
+dates_ano <- sequencia_datas <- seq(as.Date("2003-01-01"), as.Date("2023-12-31"), by = "years")
+
+
+#Puxando os dados PIB projeção
+
+Tabelaproj <- GetBCBData::gbcbd_get_series(
+  id = 4380,
+  first.date = "2003-01-01",
+  last.date = "2023-12-01"
+)
+
+
+dados_pib <- read.xlsx("C:/Users/Lorenzo Costa/Desktop/Trabalhos/Trabalhos Economia Monetaria/multiplicadorpt2/Nova pasta/tabelaPIB.xlsx", sheet = "Tabela")
+
+TabelaPIB <- GetBCBData::gbcbd_get_series(
+  id = 1207,
+  first.date = "2003-01-01",
+  last.date = "2023-12-01"
+)
+
+```
+
+```{r include=FALSE, message=FALSE, warning=FALSE}
+# Seção para possível cálculo e preparação dos dados para utilizarmos na próxima seção excluíndo os valores pré-definidos atuais
+
+Anual <- 12
+
+Bimestre <- 4 
+
+AnoM1 <- tapply(TabelaM1$value, rep(1:(length(TabelaM1$value) %/%
+                                         Anual), each = Anual), sum)
+
+length(AnoM1)
+
+AnoM2 <- tapply(TabelaM2$value, rep(1:(length(TabelaM1$value) %/%
+                                         Anual), each = Anual), sum)
+AnoM3 <- tapply(TabelaM3$value, rep(1:(length(TabelaM1$value) %/%
+                                         Anual), each = Anual), sum)
+AnoM4 <- tapply(TabelaM4$value, rep(1:(length(TabelaM1$value) %/%
+                                         Anual), each = Anual), sum)
+
+```
+
+
+```{r include=FALSE, message=FALSE, warning=FALSE}
+
+#A tabela de PIB tem menos observações que a tabela dos agregados monetários, o que não deve acontecer, entretanto Só está assim como forma representativa e estruturada para que eu possa adicionar os dados certos que realmente vamos usar ou que vamos tratar.
+
+
+# M1 + M2
+
+anos <- seq(2003,2023, by = 1)
+print(anos, max.print = Inf)
+
+length(anos)
+
+vetorPIB <- as.numeric(dados_pib[4, -1])
+print(vetorPIB, max.print = Inf)
+
+#Tabpib <- tibble(Data = anos, PIB = vetorPIB)
+
+TabM1M2 <- tibble(Data = anos, M1 = AnoM1, M2 = AnoM2)
+
+M1M2 <- rowSums(TabM1M2[, c("M1", "M2")])
+
+TabM1M2 <- tibble(Data = anos, M1M2 = M1M2)
+
+div <- function(X, Y){
+  Resultado = X/Y
+  return(Resultado)
+}
+
+# M3 + M4
+
+TabM3M4 <- tibble(Data = anos, M3 = AnoM3, M4 = AnoM4)
+
+M3M4 <- rowSums(TabM3M4[, c("M3", "M4")])
+
+TabM3M4 <- tibble(Data = anos, M3M4 = M3M4)
+
+# Razão M1 + M2 / PIB  E  Razão M3 + M4 / PIB
+MM12pib <- mapply(div, TabM1M2[2], TabelaPIB[2])
+
+MM34pib <- mapply(div, TabM3M4[2], TabelaPIB[2])
+
+class(MM12pib)
+class(MM34pib)
+
+M1M2 <- as.numeric(unlist(M1M2))
+M3M4 <- as.numeric(unlist(M3M4))
+
+
+TabelaGeral <- tibble(data = anos, "M1M2" = MM12pib, "M3M4" = MM34pib)
+
+```
+
+```{r include=FALSE, message=FALSE, warning=FALSE}
+
+class(TabelaGeral$M1M2)
+class(TabelaGeral$M3M4)
+class(TabelaGeral$data)
+
+TabelaGeral$M1M2 <- as.numeric(unlist(TabelaGeral$M1M2))
+TabelaGeral$M3M4 <- as.numeric(unlist(TabelaGeral$M3M4))
+
+write_xlsx(TabelaGeral, path = " C:/Users/Lorenzo Costa/Desktop/Trabalhos/Trabalhos Economia Monetaria/multiplicadorpt2/Nova pasta/TabelaGeral.xlsx")
+
+```
+
+```{r echo = FALSE, include=FALSE, message=FALSE, warning=FALSE}
+
+#IPCA Acumulado
+
+ipca12meses <- seq(12, nrow(TabelaIPCA), by = 12)
+df_intervalo12ipca <- TabelaIPCA[ipca12meses, ]
+
+
+#Média da SELIC
+
+function(X , Y)
+
+SELICsum <- tapply(TabelaSELIC$value, rep(1:(length(TabelaM1$value) %/% Anual), each = Anual), sum)
+
+SelicDf <- tibble(Data = anos, SELICsum = SELICsum)
+SelicDf$selic <- SelicDf$SELICsum / 12
+
+#Média IPCA
+
+IPCAsum <- tapply(TabelaIPCA$value, rep(1:(length(TabelaM1$value) %/%
+                                         Anual), each = Anual), sum)
+
+IPCAdf <- tibble(Data = anos, IPCAsum = IPCAsum)
+IPCAdf$ipca <- IPCAdf$IPCAsum /12
+
+```
+
+```{r echo = FALSE, include=FALSE, message=FALSE, warning=FALSE}
+
+############ Análise Especófica ############
+
+TabelaGeral <- TabelaGeral %>%
+  mutate(variM1M2= (M1M2 - lag(M1M2)) / lag(M1M2) * 100)
+
+TabelaGeral <- TabelaGeral %>%
+  mutate(variM3M4= (M3M4 - lag(M3M4)) / lag(M3M4) * 100)
+
+
+```
+
+```{r echo = FALSE, include=FALSE, message=FALSE, warning=FALSE}
+
+
+
+```
