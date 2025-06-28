@@ -1,6 +1,6 @@
 # Short-report-monetary-economy
 
-O short-report à seguir é um trabalho promovido pela matéria de economia monetária do curso de ciências econômicas da Universidade Federal do Tocantins (UFT).
+O short-report a seguir é um trabalho promovido pela matéria de economia monetária do curso de ciências econômicas da Universidade Federal do Tocantins (UFT).
 
 # Documentação 
 
